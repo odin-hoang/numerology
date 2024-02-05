@@ -4,14 +4,16 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-export function calculateRulingNumber(sum: number) {
-  while (sum > 9 && sum !== 11 && sum !== 22) {
-    sum = sum
+export function calculateRulingNumber(sum: string) {
+  let rn = sum.split("").reduce((a, b) => a + parseInt(b), 0);
+  while (rn > 9 && rn !== 11 && rn !== 22) {
+    console.log(rn);
+    rn = +rn
       .toString()
       .split("")
       .reduce((a, b) => a + parseInt(b), 0);
   }
-  return sum;
+  return rn;
 }
 export function calculateBirthChart(dob: string) {
   let newBirthChart = Array(9).fill(0);

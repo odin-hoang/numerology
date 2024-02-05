@@ -56,10 +56,9 @@ export default function Home() {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     let dobStr = `${day}${month}${year}`;
-    let sum = day + month + year;
     setNameChart(calculatePowerOfName(name));
     setBirthChart(calculateBirthChart(dobStr));
-    setRullingNumber(calculateRulingNumber(sum));
+    setRullingNumber(calculateRulingNumber(dobStr));
   }
 
   const [rullingNumber, setRullingNumber] = useState(0);
