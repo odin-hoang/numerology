@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 const formSchema = z.object({
-  dob: z.date({
+  dob: z.string({
     required_error: "Vui lòng chọn 1 ngày phù hợp!",
   }),
   name: z
@@ -24,82 +24,62 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import { Calendar } from "@/components/ui/calendar";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon } from "@radix-ui/react-icons";
+  calculateBirthChart,
+  calculatePowerOfName,
+  calculateRulingNumber,
+  cn,
+} from "@/lib/utils";
+import Header from "@/components/header";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableRow,
+} from "@/components/ui/table";
+import { useState } from "react";
+import { Separator } from "@/components/ui/separator";
 export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      dob: "",
     },
   });
   function onSubmit(data: z.infer<typeof formSchema>) {
-    toast({
-      title: "Tra cứu thần số học cho " + data.name,
-      description: (
-        <p className="mt-2 w-[120px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {data.dob.getDay() +
-              "/" +
-              data.dob.getMonth() +
-              "/" +
-              data.dob.getFullYear()}
-          </code>
-        </p>
-      ),
-    });
     console.log(data);
+    const date = new Date(data.dob);
+    const name = data.name;
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    let dobStr = `${day}${month}${year}`;
+    let sum = day + month + year;
+    setNameChart(calculatePowerOfName(name));
+    setBirthChart(calculateBirthChart(dobStr));
+    setRullingNumber(calculateRulingNumber(sum));
   }
 
+  const [rullingNumber, setRullingNumber] = useState(0);
+  const [birthChart, setBirthChart] = useState([0, 3, 2, 0, 0, 0, 0, 0, 0]);
+  const [nameChart, setNameChart] = useState([1, 1, 0, 0, 0, 0, 0, 1, 1]);
+  const name = "khai";
   return (
-    <main className="flex flex-col items-center justify-between p-12">
-      <h1 className="mb-4 font-bold">Tra cứu thần số học</h1>
+    <main className="flex flex-col items-center justify-between px-12 gap-5 pb-12">
+      <Header />
+      <h1 className="mt-24 font-bold">Tra cứu thần số học</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <FormField
             name="dob"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Ngày sinh</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "dd-MM-yyyy")
-                        ) : (
-                          <span>Chọn 1 ngày</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <FormLabel>
+                  Ngày sinh <br />
+                </FormLabel>
+                <Input className="w-[150px]" type="date" {...field} />
                 <FormDescription>Ngày sinh dương lịch của bạn</FormDescription>
                 <FormMessage />
               </FormItem>
@@ -111,7 +91,9 @@ export default function Home() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tên thường gọi</FormLabel>
+                <FormLabel>
+                  Tên thường gọi <br />
+                </FormLabel>
                 <FormControl>
                   <Input
                     className="w-[240px]"
@@ -129,6 +111,64 @@ export default function Home() {
           <Button type="submit">Tra cứu</Button>
         </form>
       </Form>
+      <Separator></Separator>
+      <h2>
+        Số chủ đạo{" "}
+        <span className="bg-gradient-to-t inline-block p-2 from-pink-500 to bg-yellow-400 rounded-full w-10 h-10 text-center font-bold text-white background-animate">
+          {rullingNumber}
+        </span>
+      </h2>
+      <div>
+        <Table className="w-[210px] h-[210px]">
+          <TableCaption>
+            Biểu đồ ngày sinh + <span className="text-red-500">tên</span>
+          </TableCaption>
+          <TableBody>
+            <TableRow>
+              <TableCell className="border-r ">
+                <span>{"3".repeat(birthChart[2])}</span>
+                <span className="text-red-500">{"3".repeat(nameChart[2])}</span>
+              </TableCell>
+              <TableCell className="border-r">
+                <span>{"6".repeat(birthChart[5])}</span>
+                <span className="text-red-500">{"6".repeat(nameChart[5])}</span>
+              </TableCell>
+              <TableCell>
+                <span>{"9".repeat(birthChart[8])}</span>
+                <span className="text-red-500">{"9".repeat(nameChart[8])}</span>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="border-r">
+                <span>{"2".repeat(birthChart[1])}</span>
+                <span className="text-red-500">{"2".repeat(nameChart[1])}</span>
+              </TableCell>
+              <TableCell className="border-r">
+                <span>{"5".repeat(birthChart[4])}</span>
+                <span className="text-red-500">{"5".repeat(nameChart[4])}</span>
+              </TableCell>
+              <TableCell>
+                <span>{"8".repeat(birthChart[7])}</span>
+                <span className="text-red-500">{"8".repeat(nameChart[7])}</span>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="border-r">
+                <span>{"1".repeat(birthChart[0])}</span>
+                <span className="text-red-500">{"1".repeat(nameChart[0])}</span>
+              </TableCell>
+              <TableCell className="border-r">
+                <span>{"4".repeat(birthChart[3])}</span>
+                <span className="text-red-500">{"4".repeat(nameChart[3])}</span>
+              </TableCell>
+              <TableCell>
+                <span>{"7".repeat(birthChart[6])}</span>
+                <span className="text-red-500">{"7".repeat(nameChart[6])}</span>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
     </main>
   );
 }
