@@ -78,9 +78,9 @@ export default function Home() {
                 <FormLabel>
                   Ngày sinh <br />
                 </FormLabel>
-                <div className="w-[160px]">
-                  <Input className="" type="date" {...field} />
-                </div>
+
+                <Input className="w-[150px] pr-2" type="date" {...field} />
+
                 <FormDescription>Ngày sinh dương lịch của bạn</FormDescription>
                 <FormMessage />
               </FormItem>
