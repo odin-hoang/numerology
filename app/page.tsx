@@ -27,6 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 import {
   calculateBirthChart,
+  calculateCompleteNameNumber,
   calculateIsolatedNumber,
   calculatePowerOfName,
   calculateRulingNumber,
@@ -61,9 +62,14 @@ export default function Home() {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     let dobStr = `${day}${month}${year}`;
-    setNameChart(calculatePowerOfName(name));
+    const { nameChart, outerExpression, soulUrge } = calculatePowerOfName(name);
+    setNameChart(nameChart);
     setBirthChart(calculateBirthChart(dobStr));
     setRulingNumber(calculateRulingNumber(dobStr));
+    setCompleteNameNumber({
+      soulUrge: calculateCompleteNameNumber(soulUrge),
+      outerExpression: calculateCompleteNameNumber(outerExpression),
+    });
   }
 
   const [rulingNumber, setRulingNumber] = useState(0);
@@ -73,6 +79,10 @@ export default function Home() {
     0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
   const isolatedNumbers = calculateIsolatedNumber(compoundChart);
+  const [completeNameNumber, setCompleteNameNumber] = useState({
+    soulUrge: 0,
+    outerExpression: 0,
+  });
   useEffect(() => {
     const newCompoundChart = birthChart.map(
       (value, index) => value + nameChart[index]
@@ -165,7 +175,14 @@ export default function Home() {
               "Phán quyết 2 là nhạy cảm, trực quan, hỗ trợ, đáng tin cậy, kiến tạo hòa bình, từ bi và nghệ thuật."
             }
           />
-          <h2 className="font-bold">Sức mạnh của cái tên</h2>
+          <h2 className="font-bold">
+            Sức mạnh của cái tên{" "}
+            <span className="bg-gradient-to-bl inline-block  from-sky-400 to-violet-400 rounded-full w-10 h-10 text-center leading-10 font-bold text-white background-animate ">
+              {calculateCompleteNameNumber(
+                completeNameNumber.soulUrge + completeNameNumber.outerExpression
+              )}
+            </span>
+          </h2>
           <blockquote className="text-justify text-sm">
             Một trong số những âm thanh được thừa nhận nhất đối với tai của mọi
             người là tên của họ. Chắc chắn bạn đã nhận thấy rằng, cho dù môi
@@ -182,7 +199,10 @@ export default function Home() {
             và cá tính của chúng ta.
             <QuoteIcon />
           </blockquote>
-          <PowerOfName />
+          <PowerOfName
+            soulUrge={completeNameNumber.soulUrge}
+            outerExpression={completeNameNumber.outerExpression}
+          />
           <h2 className="font-bold">Kết hợp tên và ngày sinh</h2>
           <blockquote className="text-justify text-sm">
             Khía cạnh thứ ba của số học tên là chìa khóa cho sức mạnh chung của

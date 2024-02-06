@@ -15,6 +15,16 @@ export function calculateRulingNumber(sum: string) {
   }
   return rn;
 }
+export function calculateCompleteNameNumber(num: number) {
+  while (num > 11 && num !== 22) {
+    console.log(num);
+    num = +num
+      .toString()
+      .split("")
+      .reduce((a, b) => a + parseInt(b), 0);
+  }
+  return num;
+}
 export function calculateBirthChart(dob: string) {
   let newBirthChart = Array(9).fill(0);
   for (let i = 0; i < dob.length; i++) {
@@ -24,6 +34,10 @@ export function calculateBirthChart(dob: string) {
     }
   }
   return newBirthChart;
+}
+function isVowel(name: string) {
+  const vowels = ["a", "e", "i", "o", "u", "y"];
+  return vowels.includes(name.toLowerCase());
 }
 export function calculatePowerOfName(name: string) {
   const numberDict = {
@@ -37,17 +51,28 @@ export function calculatePowerOfName(name: string) {
     8: ["h", "q", "z"],
     9: ["i", "r"],
   };
+
   const nameArray = name.toLowerCase().split("");
   const nameChart = Array(9).fill(0);
+  let soulUrge = 0;
+  let outerExpression = 0;
   nameArray.forEach((letter) => {
     for (const [key, value] of Object.entries(numberDict)) {
       if (value.includes(letter)) {
         nameChart[+key - 1] += 1;
+        if (isVowel(letter)) {
+          soulUrge += +key;
+          console.log("soulUrge: ", soulUrge);
+        } else {
+          outerExpression += +key;
+          console.log("outerExpression: ", outerExpression);
+        }
       }
     }
   });
-  return nameChart;
+  return { nameChart, soulUrge, outerExpression };
 }
+
 export function calculateArrows(compoundChart: number[]) {
   const arrowsDict = {
     "one-five-nine": [1, 5, 9],

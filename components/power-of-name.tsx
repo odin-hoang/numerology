@@ -1,6 +1,9 @@
 import React from "react";
-
-const PowerOfName = ({}) => {
+interface PowerOfNameProps {
+  soulUrge: number;
+  outerExpression: number;
+}
+const PowerOfName = ({ soulUrge, outerExpression }: PowerOfNameProps) => {
   return (
     <div className="w-full space-y-4">
       <div className="space-y-2">
@@ -9,7 +12,7 @@ const PowerOfName = ({}) => {
             Chỉ số tâm hồn{" "}
           </span>
           <span className="bg-gradient-to-tr inline-block from-blue-500 to bg-green-400 rounded-full w-9 h-9 text-center leading-9 font-bold text-white">
-            11
+            {soulUrge}
           </span>
         </h4>
         <p className="text-sm text-justify">
@@ -26,7 +29,7 @@ const PowerOfName = ({}) => {
             Chỉ số thể hiện{" "}
           </span>
           <span className="bg-gradient-to-tr inline-block from-red-400 to bg-purple-400 rounded-full w-9 h-9 text-center leading-9 font-bold text-white">
-            2
+            {outerExpression}
           </span>
         </h4>
         <p className="text-sm text-justify">
