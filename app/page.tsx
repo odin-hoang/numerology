@@ -426,10 +426,9 @@ export default function Home() {
                           hơn của nó nằm ở hai lĩnh vực, về mặt vật lý, 7 đại
                           diện cho hoạt động thực tiễn như là phương tiện để học
                           tập và giảng dạy hoàn hảo; Về mặt tâm linh, số 7 là
-                          con số "đền thờ", kho lưu trữ triết học, sự thật và
-                          trí tuệ. Điều này càng cho thấy sự cần thiết phải tách
-                          rời khỏi tài sản thế gian để hợp nhất thể xác và linh
-                          hồn.
+                          con số đền thờ, kho lưu trữ triết học, sự thật và trí
+                          tuệ. Điều này càng cho thấy sự cần thiết phải tách rời
+                          khỏi tài sản thế gian để hợp nhất thể xác và linh hồn.
                         </p>
                       }
                     >

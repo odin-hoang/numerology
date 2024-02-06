@@ -30,7 +30,7 @@ const BirthNameChartInfo = ({ compoundChart }: BirthNameChartInfoProps) => {
       {individualArrows.length ? (
         <Accordion type="single" collapsible className="w-full">
           {individualArrows.map((ia) => (
-            <AccordionItem value={ia.key}>
+            <AccordionItem key={ia.key} value={ia.key}>
               <AccordionTrigger>
                 <ArrowRightIcon />
                 {nameArrowsDict[ia.key as keyof typeof nameArrowsDict][1]}{" "}
@@ -65,7 +65,7 @@ const BirthNameChartInfo = ({ compoundChart }: BirthNameChartInfoProps) => {
           </h4>
           <Accordion type="single" collapsible className="w-full">
             {missingArrows.map((ia) => (
-              <AccordionItem value={ia.key}>
+              <AccordionItem key={ia.key} value={ia.key}>
                 <AccordionTrigger>
                   <CubeIcon />{" "}
                   {nameArrowsDict[ia.key as keyof typeof nameArrowsDict][0]}{" "}
