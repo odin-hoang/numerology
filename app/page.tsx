@@ -176,10 +176,10 @@ export default function Home() {
             Trên thực tế, tên của chúng ta phải được coi là một phần được chấp
             nhận trong tính cách và biểu hiện của chúng ta. Một cái tên rất quan
             trọng vì những rung động của nó trở nên hợp nhất với chính chúng ta.
-            Thuật ngữ "rung động" ngụ ý không chỉ tần số sóng âm thanh mà thậm
-            chí rộng hơn là các rung động biểu tượng của tên như được biểu thị
-            bằng mẫu số học của nó. Những rung động này ảnh hưởng đến chính tính
-            cách và cá tính của chúng ta.
+            Thuật ngữ rung động ngụ ý không chỉ tần số sóng âm thanh mà thậm chí
+            rộng hơn là các rung động biểu tượng của tên như được biểu thị bằng
+            mẫu số học của nó. Những rung động này ảnh hưởng đến chính tính cách
+            và cá tính của chúng ta.
             <QuoteIcon />
           </blockquote>
           <PowerOfName />
@@ -315,7 +315,7 @@ export default function Home() {
                         isolatedNumbers.includes(1) && (
                           <p>
                             Khi các số 2, 5 và 4 bị thiếu trong Biểu đồ sinh, số
-                            1 sẽ bị cô lập với tất cả các số khác. Vì "1" là con
+                            1 sẽ bị cô lập với tất cả các số khác. Vì 1 là con
                             số tượng trưng cho sự thể hiện của bản ngã con
                             người, sự cô lập của nó trên Biểu đồ sinh cho thấy
                             lý do tại sao những người này thường cảm thấy bị cô
@@ -339,11 +339,11 @@ export default function Home() {
                             được sửa chữa, nó có thể dẫn đến sự cô đơn để bản
                             ngã bị cô lập phóng đại thành một người bị cô lập.
                             Sửa chữa là dễ dàng. Đối với mỗi số bị cô lập, một
-                            chất lượng còn thiếu sẽ tích hợp Biểu đồ sinh và
-                            "khử cô lập" từng số được đại diện bởi số 5 ở trung
-                            tâm của Biểu đồ sinh. Nói chung, điều này ngụ ý sự
-                            cần thiết cho bất kỳ người nào có một hoặc nhiều số
-                            bị cô lập để phát triển tình yêu và lòng trắc ẩn hơn
+                            chất lượng còn thiếu sẽ tích hợp Biểu đồ sinh và khử
+                            cô lập từng số được đại diện bởi số 5 ở trung tâm
+                            của Biểu đồ sinh. Nói chung, điều này ngụ ý sự cần
+                            thiết cho bất kỳ người nào có một hoặc nhiều số bị
+                            cô lập để phát triển tình yêu và lòng trắc ẩn hơn
                             trong biểu hiện của họ, và học cách tự do thể hiện
                             cảm xúc tích cực của họ hơn là đóng chai chúng. Khi
                             chỉ có số 1 bị cô lập, việc phát triển các phẩm chất
@@ -389,9 +389,9 @@ export default function Home() {
                             tài sản tiền bạc trong những dịp lặp đi lặp lại cho
                             đến khi bài học thích hợp được mang về nhà cho họ.
                             Mặc dù điều này thường gây tổn thương cho người hy
-                            sinh, nhưng họ có xu hướng chấp nhận nó như là "định
-                            mệnh" hoặc không thể tránh khỏi. Nỗi đau thường có
-                            vẻ tồi tệ hơn đối với bạn bè và những người thân yêu
+                            sinh, nhưng họ có xu hướng chấp nhận nó như là định
+                            mệnh hoặc không thể tránh khỏi. Nỗi đau thường có vẻ
+                            tồi tệ hơn đối với bạn bè và những người thân yêu
                             của người phải hy sinh. Hãy nhớ rằng, 7 là số lượng
                             hiểu biết triết học, vì vậy người có 7 hoặc 7 bị cô
                             lập có thể hiểu rõ hơn về những gì đã xảy ra với họ
