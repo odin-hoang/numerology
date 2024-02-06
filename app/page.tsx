@@ -46,6 +46,13 @@ import RulingInfo from "../components/ruling-info";
 import PowerOfName from "@/components/power-of-name";
 import BirthNameChartInfo from "@/components/birth-name-chart-info";
 import MeaningOfNumber from "@/components/meaning-of-number";
+async function getRulingNumberMeaning(rn: number) {
+  const res = await fetch(
+    `https://numerology-qdl0.onrender.com/api/ruling-number/${rn}`
+  );
+  const data = await res.json();
+  return data;
+}
 export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,7 +61,7 @@ export default function Home() {
       dob: "2024-01-01",
     },
   });
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     console.log(data);
     const date = new Date(data.dob);
     const name = data.name;
@@ -63,16 +70,31 @@ export default function Home() {
     const year = date.getFullYear();
     let dobStr = `${day}${month}${year}`;
     const { nameChart, outerExpression, soulUrge } = calculatePowerOfName(name);
+    const rulingNumber = calculateRulingNumber(dobStr);
+    const rulingNumberDoc = await getRulingNumberMeaning(rulingNumber);
+    console.log(rulingNumberDoc);
     setNameChart(nameChart);
     setBirthChart(calculateBirthChart(dobStr));
-    setRulingNumber(calculateRulingNumber(dobStr));
+    setRulingNumber(rulingNumber);
     setCompleteNameNumber({
       soulUrge: calculateCompleteNameNumber(soulUrge),
       outerExpression: calculateCompleteNameNumber(outerExpression),
     });
+    setRulingNumberDoc(rulingNumberDoc);
   }
 
   const [rulingNumber, setRulingNumber] = useState(0);
+  const [rulingNumberDoc, setRulingNumberDoc] = useState({
+    number: 0,
+    description: "",
+    summary: "string",
+    lifePurpose: "string",
+    bestExpression: "string",
+    distinctiveTraits: "string",
+    negativeTendencies: "string",
+    recommendedDevelopment: "string",
+    mostSuitableVocations: "string",
+  });
   const [birthChart, setBirthChart] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [nameChart, setNameChart] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [compoundChart, setCompoundChart] = useState([
@@ -146,34 +168,19 @@ export default function Home() {
             </span>
           </h2>
           <blockquote className="text-justify text-sm">
-            Khi chúng ta ghi nhận vị trí chỉ huy của nó ở đầu mặt phẳng tâm trí,
-            chúng ta nhận ra lý do tại sao rất nhiều sự nhấn mạnh được đặt vào
-            suy nghĩ và lý luận của những người có số chủ đạo là 3. Đây là những
-            người có số ngày sinh tổng cộng 12, 21, 30, 39 hoặc 48.
+            {rulingNumberDoc.description}
             <QuoteIcon />
           </blockquote>
           <RulingInfo
-            lifePurpose={
-              "Những người này có một khả năng đặc biệt để làm việc với và dưới sự hướng dẫn của lãnh đạo năng động. Nếu không có điều này, họ có thể cảm thấy lạc lõng. Họ thường không phải là nhà lãnh đạo, hiếm khi sở hữu mong muốn lãnh đạo, nhưng họ có một khả năng độc đáo để tìm kiếm và liên kết với loại người hoặc tổ chức mà khả năng siêng năng của họ có thể được đánh giá cao nhất. Vai trò đặc biệt của họ là bổ sung bằng cách cung cấp hỗ trợ trung thành, trực quan."
-            }
-            bestExpression={
-              "Mặc dù cực kỳ có khả năng và tự tin khi được phép làm việc với tốc độ ổn định của riêng họ, Phán quyết 2 có thể cảm thấy không an toàn nếu gánh nặng căng thẳng và cấp bách dai dẳng. Họ phải được phép tiến bộ theo tốc độ tự nhiên của riêng họ, vì họ thích củng cố khi họ đi. Họ đặc biệt danh dự và không thích sự chính trực của họ bị nghi ngờ - điều này cũng sẽ làm suy yếu sự tự tin của họ. Biểu hiện tốt nhất của họ thường là thông qua việc sử dụng bàn tay nhạy cảm, chẳng hạn như trong nghệ thuật hoặc bằng văn bản, nhưng luôn luôn khi được hướng dẫn bởi trực giác trung thành của họ."
-            }
-            distinctiveTraits={
-              "Họ là những người trực quan, nhạy cảm, đáng tin cậy, siêng năng và từ bi. Họ là những người kiến tạo hòa bình, đôi khi đến mức cải cách (và trong thời đại nhận thức đang nổi lên hiện nay, đây là một khả năng rất có giá trị). Cầm quyền 2 ít bị thúc đẩy bởi cái tôi hơn hầu hết mọi người, thể hiện sự nhạy bén vị tha và cao quý khi có thể hợp nhất cái tôi của họ với cái tôi của người khác khi mong muốn hoặc cần thiết."
-            }
+            lifePurpose={rulingNumberDoc.lifePurpose}
+            bestExpression={rulingNumberDoc.bestExpression}
+            distinctiveTraits={rulingNumberDoc.distinctiveTraits}
             negativeTendenciesToBeSurmounted={
-              "Một số người cầm quyền 2 không nhận ra rằng sự phát triển vốn có của họ phải là kết quả của sự tham gia cá nhân. Chủ nghĩa duy vật hoặc một cảm giác sai lầm về tính ích kỷ sẽ thúc đẩy họ trở nên bất mãn, cáu kỉnh và thất vọng. Nhưng những đặc điểm này vừa hiếm vừa không tự nhiên đối với họ. Trong trường hợp tình huống như vậy xảy ra, cuối cùng họ sẽ nhận ra sự khởi đầu từ con đường phát triển tự nhiên của họ. Một lĩnh vực khác của sự thất vọng xuất phát từ việc dựa quá nhiều vào sự hợp lý hóa với chi phí trực giác của họ, vì điều này sẽ dẫn đến sai lầm trong phán đoán."
+              rulingNumberDoc.negativeTendencies
             }
-            recommendedDevelopment={
-              "Cầm quyền 2 nên sử dụng khả năng trực giác mạnh mẽ của họ để phát triển sự tự tin và chọn làm bạn bè và cộng sự những người chấp nhận và đánh giá cao những đặc điểm đặc biệt của họ. Điều này rất quan trọng cho sự phát triển cá nhân của họ. Khi trưởng thành, Ruling 2 tự nhiên khám phá ra tầm quan trọng của việc kiểm soát cảm xúc, học cách sử dụng nó như một sự trợ giúp cho biểu hiện nhạy cảm của họ. Nó sẽ mang lại lợi ích đáng kể cho họ để phát triển các khả năng tinh thần của họ, đặc biệt là khả năng suy luận và trí nhớ của họ. Sự phát triển như vậy sẽ neo vững chắc lòng tự trọng của họ và mang lại hạnh phúc cá nhân lớn hơn."
-            }
-            mostSuitableVocations={
-              "Những người này phù hợp nhất để làm trợ lý cá nhân cho quản trị viên, đặc biệt là trong các hoạt động từ thiện hoặc giáo dục. Họ cũng nghệ thuật, với sự nhạy cảm được thể hiện trong hội họa, âm nhạc, bài hát hoặc khiêu vũ, nhưng họ cảm thấy thoải mái hơn khi là một phần của một nhóm, thay vì một nghệ sĩ độc tấu. Họ đôi khi được tìm thấy là các nhà ngoại giao, nhân viên xã hội, thư ký có khả năng và, nếu bị hạn chế bởi thiếu giáo dục, nhân viên xử lý."
-            }
-            summary={
-              "Phán quyết 2 là nhạy cảm, trực quan, hỗ trợ, đáng tin cậy, kiến tạo hòa bình, từ bi và nghệ thuật."
-            }
+            recommendedDevelopment={rulingNumberDoc.recommendedDevelopment}
+            mostSuitableVocations={rulingNumberDoc.mostSuitableVocations}
+            summary={rulingNumberDoc.summary}
           />
           <h2 className="font-bold">
             Sức mạnh của cái tên{" "}
