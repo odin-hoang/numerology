@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 export function calculateRulingNumber(sum: string) {
   let rn = sum.split("").reduce((a, b) => a + parseInt(b), 0);
-  while (rn > 9 && rn !== 11 && rn !== 22) {
+  while (rn > 11 && rn !== 22) {
     console.log(rn);
     rn = +rn
       .toString()
