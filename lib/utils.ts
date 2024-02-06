@@ -48,3 +48,45 @@ export function calculatePowerOfName(name: string) {
   });
   return nameChart;
 }
+export function calculateArrows(compoundChart: number[]) {
+  const arrowsDict = {
+    "one-five-nine": [1, 5, 9],
+    "three-five-seven": [3, 5, 7],
+    "three-six-nine": [3, 6, 9],
+    "two-five-eight": [2, 5, 8],
+    "one-four-seven": [1, 4, 7],
+    "three-two-one": [3, 2, 1],
+    "six-five-four": [6, 5, 4],
+    "seven-eight-nine": [7, 8, 9],
+  };
+  let individualArrows = [];
+  let missingArrows = [];
+  for (const [key, value] of Object.entries(arrowsDict)) {
+    let count = value.filter((num) => compoundChart[num - 1]).length;
+    if (count === value.length) {
+      individualArrows.push({ key, value });
+    } else if (count === 0) {
+      missingArrows.push({ key, value });
+    }
+  }
+  console.log(compoundChart);
+  console.log(individualArrows);
+  console.log(missingArrows);
+  return { individualArrows, missingArrows };
+}
+export function calculateIsolatedNumber(compoundChart: number[]) {
+  const isolatedDict = {
+    1: [2, 4, 5],
+    3: [2, 5, 6],
+    7: [4, 5, 8],
+    9: [5, 6, 8],
+  };
+  let isolatedNumbers: number[] = [];
+  for (const [key, value] of Object.entries(isolatedDict)) {
+    let count = value.filter((num) => compoundChart[num - 1]).length;
+    if (count === 0 && compoundChart[+key - 1]) {
+      isolatedNumbers.push(+key);
+    }
+  }
+  return isolatedNumbers;
+}
