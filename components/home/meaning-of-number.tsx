@@ -13,7 +13,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   LinkBreak1Icon,
   LinkBreak2Icon,
@@ -26,7 +26,7 @@ import {
 } from "@radix-ui/react-popover";
 const MeaningOfNumber = ({
   children,
-  content,
+  content = "",
   isolatedContent,
 }: MeaningOfNumberProps) => {
   return (
@@ -34,8 +34,8 @@ const MeaningOfNumber = ({
       <DrawerTrigger className=" hover:scale-125 transition-all ease-in">
         {children}
       </DrawerTrigger>
-      <DrawerContent>
-        <div className="px-6 sm:px-24 lg:px-40 w-full">
+      <DrawerContent className="">
+        <div className="px-6 h-[90vh] overflow-auto sm:px-24 lg:px-40 w-full">
           <DrawerHeader>
             <div className="flex items-center gap-2 justify-center">
               {isolatedContent && (
@@ -46,8 +46,8 @@ const MeaningOfNumber = ({
                       Cô lập
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-80 lg:w-[900px] md:w-[600px] shadow-xl my-2 text-sm">
-                    <div className="bg-gradient-to-b overflow-auto max-h-72 md:max-h-[400px] lg:max-h-[600px]  rounded-sm from-yellow-50 text-justify to-amber-50 p-4">
+                  <PopoverContent className="w-[100vw] lg:w-[900px] md:w-[600px] border shadow-sm rounded-sm my-2 text-sm">
+                    <div className="bg-gradient-to-b overflow-auto max-h-[70vh] md:max-h-[400px] lg:max-h-[600px]  rounded-sm from-yellow-50 text-justify to-amber-50 p-4">
                       {isolatedContent}
                     </div>
                   </PopoverContent>

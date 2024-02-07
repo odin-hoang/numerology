@@ -70,7 +70,12 @@ export function calculatePowerOfName(name: string) {
       }
     }
   });
-  return { nameChart, soulUrge, outerExpression };
+  soulUrge = calculateCompleteNameNumber(soulUrge);
+  outerExpression = calculateCompleteNameNumber(outerExpression);
+  const completeNameNumber = calculateCompleteNameNumber(
+    soulUrge + outerExpression
+  );
+  return { nameChart, soulUrge, outerExpression, completeNameNumber };
 }
 
 export function calculateArrows(compoundChart: number[]) {
@@ -94,9 +99,9 @@ export function calculateArrows(compoundChart: number[]) {
       missingArrows.push({ key, value });
     }
   }
-  console.log(compoundChart);
-  console.log(individualArrows);
-  console.log(missingArrows);
+  console.log("compoundChart", compoundChart);
+  console.log("individualArrows", individualArrows);
+  console.log("missingArrows", missingArrows);
   return { individualArrows, missingArrows };
 }
 export function calculateIsolatedNumber(compoundChart: number[]) {

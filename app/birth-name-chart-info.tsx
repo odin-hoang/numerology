@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,11 +7,25 @@ import {
 } from "@/components/ui/accordion";
 import { calculateArrows } from "@/lib/utils";
 import { CubeIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { getArrowMeaning, getArrowsDoc } from "@/lib/request";
 interface BirthNameChartInfoProps {
-  compoundChart: number[];
+  individualArrowsDoc: ArrowDoc[];
+  missingArrowsDoc: ArrowDoc[];
 }
-const BirthNameChartInfo = ({ compoundChart }: BirthNameChartInfoProps) => {
-  const { individualArrows, missingArrows } = calculateArrows(compoundChart);
+export type Arrow = {
+  key: string;
+  value: number[];
+};
+export type ArrowDoc = Arrow & {
+  meaning: {
+    meaning: string;
+  };
+};
+
+const BirthNameChartInfo = ({
+  individualArrowsDoc,
+  missingArrowsDoc,
+}: BirthNameChartInfoProps) => {
   const nameArrowsDict = {
     "one-five-nine": ["Mũi tên trì hoãn", "Mũi tên quyết tâm"],
     "three-five-seven": ["Mũi tên hoài nghi", "Mũi tên nhạy bén"],
@@ -27,9 +41,9 @@ const BirthNameChartInfo = ({ compoundChart }: BirthNameChartInfoProps) => {
       <h4 className="bg-gradient-to-tr from-indigo-500 to-sky-500 rounded-full  leading-9 font-bold bg-clip-text text-transparent text-left">
         Mũi tên cá tính
       </h4>
-      {individualArrows.length ? (
+      {individualArrowsDoc.length ? (
         <Accordion type="single" collapsible className="w-full">
-          {individualArrows.map((ia) => (
+          {individualArrowsDoc.map((ia) => (
             <AccordionItem key={ia.key} value={ia.key}>
               <AccordionTrigger>
                 <ArrowRightIcon />
@@ -37,8 +51,7 @@ const BirthNameChartInfo = ({ compoundChart }: BirthNameChartInfoProps) => {
                 {ia.value.join("-")}
               </AccordionTrigger>
               <AccordionContent className="text-justify text-sm">
-                {/* {ia.content} */}
-                TEST
+                {ia.meaning?.meaning}
               </AccordionContent>
             </AccordionItem>
           ))}
@@ -58,13 +71,13 @@ const BirthNameChartInfo = ({ compoundChart }: BirthNameChartInfoProps) => {
           điều đặc biệt quan trọng đối với họ.
         </p>
       )}
-      {!!missingArrows.length && (
+      {!!missingArrowsDoc.length && (
         <div>
           <h4 className="bg-gradient-to-r from-rose-500 to-fuchsia-400 rounded-full  leading-9 font-bold bg-clip-text text-transparent text-left">
             Mũi tên vắng mặt
           </h4>
           <Accordion type="single" collapsible className="w-full">
-            {missingArrows.map((ia) => (
+            {missingArrowsDoc.map((ia) => (
               <AccordionItem key={ia.key} value={ia.key}>
                 <AccordionTrigger>
                   <CubeIcon />{" "}
@@ -72,8 +85,7 @@ const BirthNameChartInfo = ({ compoundChart }: BirthNameChartInfoProps) => {
                   {ia.value.join("-")}
                 </AccordionTrigger>
                 <AccordionContent className="text-justify text-sm">
-                  {/* {ia.content} */}
-                  TEST
+                  {ia.meaning?.meaning}
                 </AccordionContent>
               </AccordionItem>
             ))}

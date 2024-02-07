@@ -26,13 +26,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
+  calculateArrows,
   calculateBirthChart,
   calculateCompleteNameNumber,
   calculateIsolatedNumber,
   calculatePowerOfName,
   calculateRulingNumber,
 } from "@/lib/utils";
-import Header from "@/components/header";
 import {
   Table,
   TableBody,
@@ -42,17 +42,23 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import RulingInfo from "../components/ruling-info";
-import PowerOfName from "@/components/power-of-name";
-import BirthNameChartInfo from "@/components/birth-name-chart-info";
-import MeaningOfNumber from "@/components/meaning-of-number";
-async function getRulingNumberMeaning(rn: number) {
-  const res = await fetch(
-    `https://numerology-qdl0.onrender.com/api/ruling-number/${rn}`
-  );
-  const data = await res.json();
-  return data;
-}
+import RulingInfo from "../components/home/ruling-info";
+import PowerOfName from "@/components/home/power-of-name";
+import BirthNameChartInfo, { ArrowDoc } from "@/app/birth-name-chart-info";
+import MeaningOfNumber from "@/components/home/meaning-of-number";
+import {
+  getArrowsDoc,
+  getChartMeaning,
+  getPowerOfNameMeaning,
+  getRulingNumberMeaning,
+} from "@/lib/request";
+
+type ChartInfo = {
+  number: number;
+  description: string;
+  count: number;
+  meaning: string;
+};
 export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -69,51 +75,84 @@ export default function Home() {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     let dobStr = `${day}${month}${year}`;
-    const { nameChart, outerExpression, soulUrge } = calculatePowerOfName(name);
+    const { nameChart, outerExpression, soulUrge, completeNameNumber } =
+      calculatePowerOfName(name);
     const rulingNumber = calculateRulingNumber(dobStr);
+    // Get data
     const rulingNumberDoc = await getRulingNumberMeaning(rulingNumber);
-    console.log(rulingNumberDoc);
+    const powerOfNameDoc = await getPowerOfNameMeaning(
+      soulUrge,
+      outerExpression
+    );
+    // Calculate numbers
     setNameChart(nameChart);
     setBirthChart(calculateBirthChart(dobStr));
     setRulingNumber(rulingNumber);
-    setCompleteNameNumber({
-      soulUrge: calculateCompleteNameNumber(soulUrge),
-      outerExpression: calculateCompleteNameNumber(outerExpression),
-    });
+    setCompleteNameNumber(completeNameNumber);
+    // Documentation
     setRulingNumberDoc(rulingNumberDoc);
+    setPowerOfNameDoc(powerOfNameDoc);
   }
 
   const [rulingNumber, setRulingNumber] = useState(0);
   const [rulingNumberDoc, setRulingNumberDoc] = useState({
     number: 0,
     description: "",
-    summary: "string",
-    lifePurpose: "string",
-    bestExpression: "string",
-    distinctiveTraits: "string",
-    negativeTendencies: "string",
-    recommendedDevelopment: "string",
-    mostSuitableVocations: "string",
+    summary: "",
+    lifePurpose: "",
+    bestExpression: "",
+    distinctiveTraits: "",
+    negativeTendencies: "",
+    recommendedDevelopment: "",
+    mostSuitableVocations: "",
   });
   const [birthChart, setBirthChart] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [nameChart, setNameChart] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [powerOfNameDoc, setPowerOfNameDoc] = useState({
+    soulUrge: {
+      number: 0,
+      description: "",
+    },
+    outerExpression: {
+      number: 0,
+      description: "",
+    },
+  });
+  const [chartDoc, setChartDoc] = useState<ChartInfo[]>([]);
+  const [individualArrowsDoc, setIndividualArrowsDoc] = useState<ArrowDoc[]>(
+    []
+  );
+  const [missingArrowsDoc, setMissingArrowsDoc] = useState<ArrowDoc[]>([]);
+  const [completeNameNumber, setCompleteNameNumber] = useState(0);
   const [compoundChart, setCompoundChart] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
   const isolatedNumbers = calculateIsolatedNumber(compoundChart);
-  const [completeNameNumber, setCompleteNameNumber] = useState({
-    soulUrge: 0,
-    outerExpression: 0,
-  });
   useEffect(() => {
     const newCompoundChart = birthChart.map(
       (value, index) => value + nameChart[index]
     );
     setCompoundChart(newCompoundChart);
   }, [birthChart, nameChart]);
+  useEffect(() => {
+    (async () => {
+      const chartDoc = await getChartMeaning(compoundChart);
+      console.log("chartDoc", chartDoc);
+      setChartDoc(chartDoc);
+    })();
+    const { individualArrows, missingArrows } = calculateArrows(compoundChart);
+    const fetchArrowsDoc = async () => {
+      const { individualArrowsDoc, missingArrowsDoc } = await getArrowsDoc(
+        individualArrows,
+        missingArrows
+      );
+      setIndividualArrowsDoc(individualArrowsDoc);
+      setMissingArrowsDoc(missingArrowsDoc);
+    };
+    fetchArrowsDoc();
+  }, [compoundChart]);
   return (
     <main className="flex flex-col items-center justify-between px-12 gap-5 pb-12 ">
-      <Header />
       <h1 className="mt-24 font-bold">Tra cứu thần số học</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
@@ -157,7 +196,6 @@ export default function Home() {
           <Button type="submit">Tra cứu</Button>
         </form>
       </Form>
-
       {!!rulingNumber && (
         <div className="sm:w-[600px] lg:w-[900px] flex items-center flex-col gap-5">
           <Separator></Separator>
@@ -185,9 +223,7 @@ export default function Home() {
           <h2 className="font-bold">
             Sức mạnh của cái tên{" "}
             <span className="bg-gradient-to-bl inline-block  from-sky-400 to-violet-400 rounded-full w-10 h-10 text-center leading-10 font-bold text-white background-animate ">
-              {calculateCompleteNameNumber(
-                completeNameNumber.soulUrge + completeNameNumber.outerExpression
-              )}
+              {completeNameNumber}
             </span>
           </h2>
           <blockquote className="text-justify text-sm">
@@ -203,12 +239,24 @@ export default function Home() {
             Thuật ngữ rung động ngụ ý không chỉ tần số sóng âm thanh mà thậm chí
             rộng hơn là các rung động biểu tượng của tên như được biểu thị bằng
             mẫu số học của nó. Những rung động này ảnh hưởng đến chính tính cách
-            và cá tính của chúng ta.
+            và cá tính của chúng ta. Số tên hoàn chỉnh từ 2 đến 11 và sau đó là
+            22/ 4. Mức độ ảnh hưởng của Số tên hoàn chỉnh nằm trong mối quan hệ
+            của nó với Số chủ đạo, chứ không phải bất kỳ đóng góp cụ thể nào của
+            riêng nó. Số tên hoàn chỉnh có thể cân bằng hoặc củng cố sức mạnh
+            của Số chủ đạo. Nếu Số tên hoàn chỉnh giống với Số chủ đạo, nó cung
+            cấp sự củng cố lớn nhất cho Số chủ đạo. Nếu Số tên hoàn chỉnh khác
+            với Số chủ đạo, nhưng cả hai đều ở trên cùng một Mặt phẳng (4, 7 và
+            10 trên Mặt phẳng Vật lý; 2, 5, 8 và 11 trên Mặt phẳng Linh hồn; 3,
+            6 và 9 trên Mặt phẳng Tâm trí; và 22/4 cả trên Mặt phẳng Vật lý và
+            Linh hồn), thì sự củng cố cân bằng được đưa ra trên Mặt phẳng đó.
+            Cuối cùng, nếu một Số tên hoàn chỉnh nằm trên một mặt phẳng khác với
+            Số cầm quyền, một phạm vi rung động rộng hơn được cung cấp để mở
+            rộng tính cách.
             <QuoteIcon />
           </blockquote>
           <PowerOfName
-            soulUrge={completeNameNumber.soulUrge}
-            outerExpression={completeNameNumber.outerExpression}
+            soulUrge={powerOfNameDoc.soulUrge}
+            outerExpression={powerOfNameDoc.outerExpression}
           />
           <h2 className="font-bold">Kết hợp tên và ngày sinh</h2>
           <blockquote className="text-justify text-sm">
@@ -252,9 +300,7 @@ export default function Home() {
                         isolatedNumbers.includes(3) &&
                         "Điều này có nghĩa là tiềm năng tâm trí mạnh mẽ của họ có thể dễ dàng được khuếch tán, vì nó không liên quan đến Mặt phẳng Vật lý, và sức mạnh của nó không dễ dàng được đưa vào thực hành. Vấn đề này có thể trở nên phức tạp hơn khi có nhiều hơn một 3 người bị cô lập, vì khi đó trí tưởng tượng có thể chạy loạn và những người này có thể trở thành hoang tưởng hoặc 'huyền thoại trong tâm trí của chính họ'."
                       }
-                      content={
-                        "Với sự tỉnh táo tinh thần tăng lên này là một sự nhấn mạnh rõ rệt về trí tưởng tượng của một người và tăng khả năng văn học. Quyền lực như vậy phải được kỷ luật cẩn thận để tạo điều kiện cho sự thể hiện hữu ích nhất và cân bằng nhất của nó, và để tránh những gì có thể trở thành hành vi chống đối xã hội nếu được phép gây bạo loạn. Để tạo điều kiện cho kỷ luật tự giác, việc thực hành thiền định là có giá trị, cùng với việc rèn luyện trí nhớ và phát triển trực giác. Điều này cho phép phát triển các quá trình suy nghĩ mang tính xây dựng hơn. Nếu không, bộ não hoạt động mạnh mẽ của cả 3 sẽ tập trung quá nhiều vào trí tưởng tượng gây bất lợi cho việc lập kế hoạch khách quan, điều tra và hiểu biết tích cực. Khi làm như vậy, họ có xu hướng đánh mất thực tế. Hầu hết những người có hai hoặc ba số 3 trên Biểu đồ sinh của họ có khả năng viết đáng kể, mặc dù họ hiếm khi nhận ra điều này mà không có sự giúp đỡ từ bên ngoài. Họ cần được khuyến khích đặt những suy nghĩ và tưởng tượng của họ lên giấy, vì điều này sẽ kích thích một biểu hiện văn học tự do. Đổi lại, biểu hiện như vậy sẽ giúp những người này chuyển chất lượng có khả năng tràn lan này, và có lẽ dễ dàng biến nó thành một nguồn thu nhập sinh lợi."
-                      }
+                      content={chartDoc[2] && chartDoc[2].meaning}
                     >
                       <span>{"3".repeat(birthChart[2])}</span>
                       <span className="text-cyan-600">
@@ -263,7 +309,9 @@ export default function Home() {
                     </MeaningOfNumber>
                   </TableCell>
                   <TableCell className="border-r font-bold  ">
-                    <MeaningOfNumber content={"Hello"}>
+                    <MeaningOfNumber
+                      content={chartDoc[5] && chartDoc[5].meaning}
+                    >
                       <span>{"6".repeat(birthChart[5])}</span>
                       <span className="text-cyan-600">
                         {"6".repeat(nameChart[5])}
@@ -298,9 +346,7 @@ export default function Home() {
                           </p>
                         )
                       }
-                      content={
-                        "Tham vọng, trách nhiệm và chủ nghĩa lý tưởng - đây là ba phẩm chất chính của 9. Sức mạnh này đã là nền tảng của động lực của nhân loại trong thế kỷ qua, chịu trách nhiệm cho nỗ lực của chúng ta để tìm hiểu thêm về cuộc sống và kiểm soát nó nhiều hơn. Không phải là nó dường như đã thành công rất tốt. Mặc dù chúng ta biết vô hạn nhiều hơn về môi trường của chúng ta và con người là gì so với đầu thế kỷ 20, chúng ta cũng có nhiều suy thoái môi trường, bệnh tật và đau khổ của con người và nạn đói và nghèo đói lan rộng hơn bất cứ lúc nào trong hai thế kỷ qua. Chuyện gì đã xảy ra? Có thể là quá nhiều sự tập trung đã được đặt vào tham vọng và không đủ vào trách nhiệm và chủ nghĩa lý tưởng?"
-                      }
+                      content={chartDoc[8] && chartDoc[8].meaning}
                     >
                       <span>{"9".repeat(birthChart[8])}</span>
                       <span className="text-cyan-600 ">
@@ -311,7 +357,9 @@ export default function Home() {
                 </TableRow>
                 <TableRow>
                   <TableCell className="border-r font-bold  ">
-                    <MeaningOfNumber content={""}>
+                    <MeaningOfNumber
+                      content={chartDoc[1] && chartDoc[1].meaning}
+                    >
                       <span>{"2".repeat(birthChart[1])}</span>
                       <span className="text-cyan-600">
                         {"2".repeat(nameChart[1])}
@@ -319,7 +367,9 @@ export default function Home() {
                     </MeaningOfNumber>
                   </TableCell>
                   <TableCell className="border-r font-bold  ">
-                    <MeaningOfNumber content={""}>
+                    <MeaningOfNumber
+                      content={chartDoc[4] && chartDoc[4].meaning}
+                    >
                       <span>{"5".repeat(birthChart[4])}</span>
                       <span className="text-cyan-600">
                         {"5".repeat(nameChart[4])}
@@ -327,7 +377,9 @@ export default function Home() {
                     </MeaningOfNumber>
                   </TableCell>
                   <TableCell className=" font-bold">
-                    <MeaningOfNumber content={""}>
+                    <MeaningOfNumber
+                      content={chartDoc[7] && chartDoc[7].meaning}
+                    >
                       <span>{"8".repeat(birthChart[7])}</span>
                       <span className="text-cyan-600">
                         {"8".repeat(nameChart[7])}
@@ -382,7 +434,7 @@ export default function Home() {
                           </p>
                         )
                       }
-                      content={""}
+                      content={chartDoc[0] && chartDoc[0].meaning}
                     >
                       <span>{"1".repeat(birthChart[0])}</span>
                       <span className="text-cyan-600">
@@ -391,7 +443,9 @@ export default function Home() {
                     </MeaningOfNumber>
                   </TableCell>
                   <TableCell className="border-r font-bold  ">
-                    <MeaningOfNumber content={""}>
+                    <MeaningOfNumber
+                      content={chartDoc[3] && chartDoc[3].meaning}
+                    >
                       <span>{"4".repeat(birthChart[3])}</span>
                       <span className="text-cyan-600">
                         {"4".repeat(nameChart[3])}
@@ -443,21 +497,7 @@ export default function Home() {
                           </p>
                         )
                       }
-                      content={
-                        <p>
-                          Là con số cao nhất của Mặt phẳng Vật lý, 7 đại diện
-                          cho một chức năng đặc biệt của cuộc sống con người. Nó
-                          chỉ ra số lượng học tập mà một người phải tích lũy,
-                          nói chung thông qua hình thức kinh nghiệm cá nhân khó
-                          quên được gọi là hy sinh. Ý nghĩa triết học sâu sắc
-                          hơn của nó nằm ở hai lĩnh vực, về mặt vật lý, 7 đại
-                          diện cho hoạt động thực tiễn như là phương tiện để học
-                          tập và giảng dạy hoàn hảo; Về mặt tâm linh, số 7 là
-                          con số đền thờ, kho lưu trữ triết học, sự thật và trí
-                          tuệ. Điều này càng cho thấy sự cần thiết phải tách rời
-                          khỏi tài sản thế gian để hợp nhất thể xác và linh hồn.
-                        </p>
-                      }
+                      content={chartDoc[6] && chartDoc[6].meaning}
                     >
                       <span>{"7".repeat(birthChart[6])}</span>
                       <span className="text-cyan-600">
@@ -470,8 +510,18 @@ export default function Home() {
             </Table>
           </div>
           <BirthNameChartInfo
-            compoundChart={compoundChart}
+            individualArrowsDoc={individualArrowsDoc}
+            missingArrowsDoc={missingArrowsDoc}
           ></BirthNameChartInfo>
+          <p>
+            Hãy nhớ rằng, sức mạnh của Biểu đồ sinh ban đầu của bạn không quan
+            trọng bằng những gì bạn làm để lấp đầy khoảng trống của nó. Một số
+            người thành công nhất trong lịch sử đã có một số Biểu đồ sinh yếu
+            nhất và trống rỗng nhất. Thành công của họ chỉ đến bằng cách phát
+            triển những phẩm chất mà họ thiếu ban đầu và phát triển theo hướng
+            hoàn hảo. Đó là mục đích của cuộc sống - không có gì có thể hướng
+            chúng ta tốt hơn số học.
+          </p>
         </div>
       )}
     </main>
