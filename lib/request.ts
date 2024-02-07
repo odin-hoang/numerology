@@ -1,10 +1,10 @@
 import { Arrow } from "@/app/birth-name-chart-info";
-
+const baseURl = "https://numerology-qdl0.onrender.com/api";
 export async function getRulingNumberMeaning(rn: number) {
   // const res = await fetch(
   //   `https://numerology-qdl0.onrender.com/api/ruling-number/${rn}`
   // );
-  const res = await fetch(`http://localhost:2024/api/ruling-number/${rn}`);
+  const res = await fetch(`${baseURl}/ruling-number/${rn}`);
   const data = await res.json();
   return data;
 }
@@ -16,7 +16,7 @@ export async function getPowerOfNameMeaning(
   //   `https://numerology-qdl0.onrender.com/api/power-of-name/${soulUrge}/${outerExpression}`
   // );
   const res = await fetch(
-    `http://localhost:2024/api/power-of-name/?soulUrge=${soulUrge}&outerExpression=${outerExpression}`
+    `${baseURl}/power-of-name/?soulUrge=${soulUrge}&outerExpression=${outerExpression}`
   );
   const data = await res.json();
   return data;
@@ -24,7 +24,7 @@ export async function getPowerOfNameMeaning(
 export async function getChartMeaning(chart: number[]) {
   const body = JSON.stringify({ chart });
   console.log(body);
-  const res = await fetch(`http://localhost:2024/api/chart`, {
+  const res = await fetch(`${baseURl}/chart`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,9 +36,7 @@ export async function getChartMeaning(chart: number[]) {
 }
 
 export async function getArrowMeaning(arrow: string, filled: boolean) {
-  const res = await fetch(
-    `http://localhost:2024/api/arrow?arrow=${arrow}&filled=${filled}`
-  );
+  const res = await fetch(`${baseURl}/arrow?arrow=${arrow}&filled=${filled}`);
   const data = await res.json();
   return data;
 }
