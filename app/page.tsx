@@ -44,7 +44,9 @@ import { Suspense, useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import RulingInfo from "../components/home/ruling-info";
 import PowerOfName from "@/components/home/power-of-name";
-import BirthNameChartInfo, { ArrowDoc } from "@/app/birth-name-chart-info";
+import BirthNameChartInfo, {
+  ArrowDoc,
+} from "@/components/home/birth-name-chart-info";
 import MeaningOfNumber from "@/components/home/meaning-of-number";
 import {
   getArrowsDoc,
@@ -55,6 +57,7 @@ import {
 import { HomeIcon, SymbolIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import DayNumberMeaning from "@/components/home/day-number";
 type ChartInfo = {
   number: number;
   description: string;
@@ -93,6 +96,9 @@ export default function Home() {
     setBirthChart(calculateBirthChart(dobStr));
     setRulingNumber(rulingNumber);
     setCompleteNameNumber(completeNameNumber);
+    setDayNumber(calculateCompleteNameNumber(day));
+    setMonthNumber(calculateCompleteNameNumber(month));
+    setYearNumber(calculateCompleteNameNumber(year));
     // Documentation
     setRulingNumberDoc(rulingNumberDoc);
     setPowerOfNameDoc(powerOfNameDoc);
@@ -101,6 +107,9 @@ export default function Home() {
   }
 
   const [rulingNumber, setRulingNumber] = useState(0);
+  const [dayNumber, setDayNumber] = useState(0);
+  const [monthNumber, setMonthNumber] = useState(0);
+  const [yearNumber, setYearNumber] = useState(0);
   const [rulingNumberDoc, setRulingNumberDoc] = useState({
     number: 0,
     description: "",
@@ -567,7 +576,8 @@ export default function Home() {
                   individualArrowsDoc={individualArrowsDoc}
                   missingArrowsDoc={missingArrowsDoc}
                 ></BirthNameChartInfo>
-                <p>
+                <DayNumberMeaning dayNumber={dayNumber}></DayNumberMeaning>
+                <p className="text-justify text-sm border p-2 rounded-sm">
                   Hãy nhớ rằng, sức mạnh của Biểu đồ sinh ban đầu của bạn không
                   quan trọng bằng những gì bạn làm để lấp đầy khoảng trống của
                   nó. Một số người thành công nhất trong lịch sử đã có một số
@@ -576,6 +586,20 @@ export default function Home() {
                   đầu và phát triển theo hướng hoàn hảo. Đó là mục đích của cuộc
                   sống - không có gì có thể hướng chúng ta tốt hơn số học.
                 </p>
+                <Link
+                  href={{
+                    pathname: "/cycle",
+                    query: {
+                      day: dayNumber,
+                      month: monthNumber,
+                      year: yearNumber,
+                      rulingNumber: rulingNumber,
+                    },
+                  }}
+                  className="bg-gradient-to-r from-fuchsia-200 to-amber-200 via-rose-200 py-2 px-4 rounded-md opacity-90 hover:opacity-100"
+                >
+                  Xem định hướng năm {new Date().getFullYear()}
+                </Link>
               </div>
             </motion.div>
           )

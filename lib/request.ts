@@ -1,10 +1,13 @@
-import { Arrow } from "@/app/birth-name-chart-info";
-const baseURl = "https://numerology-qdl0.onrender.com/api";
+import { TPeak } from "@/components/cycle/peak";
+import { TPersonalYear } from "@/components/cycle/personal-year";
+import { Arrow } from "@/components/home/birth-name-chart-info";
+// const baseURL = "https://numerology-qdl0.onrender.com/api";
+const baseURL = "http://localhost:2024/api";
 export async function getRulingNumberMeaning(rn: number) {
   // const res = await fetch(
   //   `https://numerology-qdl0.onrender.com/api/ruling-number/${rn}`
   // );
-  const res = await fetch(`${baseURl}/ruling-number/${rn}`);
+  const res = await fetch(`${baseURL}/ruling-number/${rn}`);
   const data = await res.json();
   return data;
 }
@@ -16,7 +19,7 @@ export async function getPowerOfNameMeaning(
   //   `https://numerology-qdl0.onrender.com/api/power-of-name/${soulUrge}/${outerExpression}`
   // );
   const res = await fetch(
-    `${baseURl}/power-of-name/?soulUrge=${soulUrge}&outerExpression=${outerExpression}`
+    `${baseURL}/power-of-name/?soulUrge=${soulUrge}&outerExpression=${outerExpression}`
   );
   const data = await res.json();
   return data;
@@ -24,7 +27,7 @@ export async function getPowerOfNameMeaning(
 export async function getChartMeaning(chart: number[]) {
   const body = JSON.stringify({ chart });
   console.log(body);
-  const res = await fetch(`${baseURl}/chart`, {
+  const res = await fetch(`${baseURL}/chart`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +39,7 @@ export async function getChartMeaning(chart: number[]) {
 }
 
 export async function getArrowMeaning(arrow: string, filled: boolean) {
-  const res = await fetch(`${baseURl}/arrow?arrow=${arrow}&filled=${filled}`);
+  const res = await fetch(`${baseURL}/arrow?arrow=${arrow}&filled=${filled}`);
   const data = await res.json();
   return data;
 }
@@ -70,4 +73,18 @@ export async function getArrowsDoc(
   console.log("missingArrowsDoc", missingArrowsDoc);
 
   return { individualArrowsDoc, missingArrowsDoc };
+}
+export async function getDayMeaning(number: number) {
+  const res = await fetch(`${baseURL}/day?number=${number}`);
+  return await res.json();
+}
+export async function getPersonalYearMeaning(py: number) {
+  const res = await fetch(`${baseURL}/personal-year?personalYear=${py}`);
+  const data = (await res.json()) as TPersonalYear[];
+  return data;
+}
+export async function getPeakMeaning(peak: number) {
+  const res = await fetch(`${baseURL}/peak?number=${peak}`);
+  const data = (await res.json()) as TPeak;
+  return data;
 }

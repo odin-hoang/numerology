@@ -15,6 +15,27 @@ export function calculateRulingNumber(sum: string) {
   }
   return rn;
 }
+export function calculateWorldYear(year: string) {
+  let wy = year.split("").reduce((a, b) => a + parseInt(b), 0);
+  while (wy > 9) {
+    wy = +wy
+      .toString()
+      .split("")
+      .reduce((a, b) => a + parseInt(b), 0);
+  }
+  return wy;
+}
+export function calculateBottomPeaks(number: string) {
+  console.log(number);
+  let num = number.split("").reduce((a, b) => a + parseInt(b), 0);
+  while (num > 9) {
+    num = +num
+      .toString()
+      .split("")
+      .reduce((a, b) => a + parseInt(b), 0);
+  }
+  return num;
+}
 export function calculateCompleteNameNumber(num: number) {
   while (num > 11 && num !== 22) {
     console.log(num);
