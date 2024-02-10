@@ -7,6 +7,10 @@ import Header from "@/components/header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  verification: {
+    google: "8UaoeAif1vdWk69dhGUQoFFOeQ1j1n7flQxHk_QdnsM",
+  },
+  robots: "follow, index",
   openGraph: {
     title: "Tra cứu thần số học - Khai phá bản thân",
     description:
