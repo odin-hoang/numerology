@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     siteName: "Thần số học - by Khai Fade",
     images: [
       {
-        url: "https://thansohoconline.vercel.app",
+        url: "https://thansohoconline.vercel.app/og.png",
         width: 800,
         height: 600,
       },
