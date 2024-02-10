@@ -7,11 +7,22 @@ import Header from "@/components/header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Tra cứu thần số học - Khai phá bản thân",
-  description:
-    "Bên trong mỗi người là một ánh sáng tuyệt vời đang chờ đợi để tỏa sáng, một linh hồn hùng vĩ đang khao khát được thể hiện.",
+  openGraph: {
+    title: "Tra cứu thần số học - Khai phá bản thân",
+    description:
+      "Bên trong mỗi người là một ánh sáng tuyệt vời đang chờ đợi để tỏa sáng, một linh hồn hùng vĩ đang khao khát được thể hiện.",
+    url: "https://thansohoconline.vercel.app",
+    siteName: "Thần số học - by Khai Fade",
+    images: [
+      {
+        url: "https://thansohoconline.vercel.app",
+        width: 800,
+        height: 600,
+      },
+    ],
+    type: "website",
+  },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
