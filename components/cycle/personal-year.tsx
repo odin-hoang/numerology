@@ -17,6 +17,7 @@ export interface PersonalYearProps {
 }
 const PersonalYear = ({ py }: PersonalYearProps) => {
   const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
   return (
     <div>
       <p className="text-justify text-sm py-2">{py[0]?.description}</p>
@@ -30,7 +31,7 @@ const PersonalYear = ({ py }: PersonalYearProps) => {
                   "bg-gradient-to-tr from-cyan-300 to-sky-400"
               )}
             >
-              Tháng {data.month}
+              Tháng {data.month} / {currentYear}
             </AccordionTrigger>
             <AccordionContent className="text-justify">
               {data.meaning}
