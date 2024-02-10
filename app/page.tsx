@@ -202,7 +202,9 @@ export default function Home() {
                   </FormLabel>
                   <Input className="w-[150px] pr-2" type="date" {...field} />
                   <FormDescription>
-                    Ngày sinh dương lịch của bạn
+                    Ngày sinh dương lịch của bạn. Nếu có nhiều hơn 1 ngày sinh,
+                    hãy tra cứu cả 2 ngày sinh vì mỗi ngày sinh đều sẽ có ảnh
+                    hưởng.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -220,13 +222,13 @@ export default function Home() {
                   <FormControl>
                     <Input
                       className="w-[240px]"
-                      placeholder="Nhập tên không dấu"
+                      placeholder="Nhập có dấu hoặc không dấu"
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Tên thường gọi của bạn <br />{" "}
-                    <i>Ví dụ: An, Đức Anh, Olivia, Đăng Quang,...</i>
+                    Tên mọi người gọi bạn, không nhất thiết là tên đầy đủ.{" "}
+                    <br /> <i>Ví dụ: An, Đức Anh, Olivia, Đăng Quang,...</i>
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
