@@ -4,6 +4,20 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+export function removeVietnameseDiacritics(str: string) {
+  str = str.toLowerCase();
+  // Chuyển đổi các ký tự có dấu sang không dấu
+  str = str.replace(/[àáảãạăắằẳẵặâầấẩẫậ]/g, "a");
+  str = str.replace(/[èéẻẽẹêềếểễệ]/g, "e");
+  str = str.replace(/[ìíỉĩị]/g, "i");
+  str = str.replace(/[òóỏõọôồốổỗộơờớởỡợ]/g, "o");
+  str = str.replace(/[ùúủũụưừứửữự]/g, "u");
+  str = str.replace(/[ỳýỷỹỵ]/g, "y");
+  str = str.replace(/đ/g, "d");
+  // Loại bỏ các ký tự không phải chữ cái, số hoặc dấu cách
+  str = str.replace(/[^a-z0-9\s]/g, "");
+  return str;
+}
 export function calculateRulingNumber(sum: string) {
   let rn = sum.split("").reduce((a, b) => a + parseInt(b), 0);
   while (rn > 11 && rn !== 22) {

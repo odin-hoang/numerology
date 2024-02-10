@@ -1,13 +1,13 @@
 import { TPeak } from "@/components/cycle/peak";
 import { TPersonalYear } from "@/components/cycle/personal-year";
 import { Arrow } from "@/components/home/birth-name-chart-info";
-const baseURL = "https://numerology-qdl0.onrender.com/api";
-// const baseURL = "http://localhost:2024/api";
-export async function getRulingNumberMeaning(rn: number) {
+// const baseURL = "https://numerology-qdl0.onrender.com/api";
+const baseURL = "http://localhost:2024/api";
+export async function getRulingNumberMeaning(rn: number, dobStr: string) {
   // const res = await fetch(
   //   `https://numerology-qdl0.onrender.com/api/ruling-number/${rn}`
   // );
-  const res = await fetch(`${baseURL}/ruling-number/${rn}`);
+  const res = await fetch(`${baseURL}/ruling-number/${rn}?dob=${dobStr}`);
   const data = await res.json();
   return data;
 }
@@ -24,8 +24,8 @@ export async function getPowerOfNameMeaning(
   const data = await res.json();
   return data;
 }
-export async function getChartMeaning(chart: number[]) {
-  const body = JSON.stringify({ chart });
+export async function getChartMeaning(chart: number[], name: string) {
+  const body = JSON.stringify({ chart, name });
   console.log(body);
   const res = await fetch(`${baseURL}/chart`, {
     method: "POST",

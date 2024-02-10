@@ -32,6 +32,7 @@ import {
   calculateIsolatedNumber,
   calculatePowerOfName,
   calculateRulingNumber,
+  removeVietnameseDiacritics,
 } from "@/lib/utils";
 import {
   Table,
@@ -82,16 +83,23 @@ export default function Home() {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     let dobStr = `${day}${month}${year}`;
+    let dayOfBirth = `${day}-${month}-${year}`;
+    const removedVNName = removeVietnameseDiacritics(name);
+    console.log(removedVNName);
     const { nameChart, outerExpression, soulUrge, completeNameNumber } =
-      calculatePowerOfName(name);
+      calculatePowerOfName(removedVNName);
     const rulingNumber = calculateRulingNumber(dobStr);
     // Get data
-    const rulingNumberDoc = await getRulingNumberMeaning(rulingNumber);
+    const rulingNumberDoc = await getRulingNumberMeaning(
+      rulingNumber,
+      dayOfBirth
+    );
     const powerOfNameDoc = await getPowerOfNameMeaning(
       soulUrge,
       outerExpression
     );
     // Calculate numbers
+    setName(name);
     setNameChart(nameChart);
     setBirthChart(calculateBirthChart(dobStr));
     setRulingNumber(rulingNumber);
@@ -105,7 +113,7 @@ export default function Home() {
     setIsSubmitting(false);
     setIsForm(false);
   }
-
+  const [name, setName] = useState("");
   const [rulingNumber, setRulingNumber] = useState(0);
   const [dayNumber, setDayNumber] = useState(0);
   const [monthNumber, setMonthNumber] = useState(0);
@@ -151,7 +159,7 @@ export default function Home() {
   }, [birthChart, nameChart]);
   useEffect(() => {
     (async () => {
-      const chartDoc = await getChartMeaning(compoundChart);
+      const chartDoc = await getChartMeaning(compoundChart, name);
       console.log("chartDoc", chartDoc);
       setChartDoc(chartDoc);
     })();
