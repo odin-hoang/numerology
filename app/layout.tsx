@@ -10,9 +10,12 @@ export const metadata: Metadata = {
   verification: {
     google: "8UaoeAif1vdWk69dhGUQoFFOeQ1j1n7flQxHk_QdnsM",
   },
-  title: "Tra cứu thần số học - Khai phá bản thân",
+  title: {
+    default: "Tra cứu thần số học - Khai phá bản thân",
+    template: `%s | Tra cứu thần số học`,
+  },
   description:
-    "Bên trong mỗi người là một ánh sáng tuyệt vời đang chờ đợi để tỏa sáng, một linh hồn hùng vĩ đang khao khát được thể hiện.",
+    "Bên trong mỗi người là một ánh sáng tuyệt vời đang chờ đợi để tỏa sáng, một linh hồn hùng vĩ đang khao khát được thể hiện. Tra cứu thần số học - Khai phá bản thân.",
   robots: "follow, index",
   openGraph: {
     title: "Tra cứu thần số học - Khai phá bản thân",

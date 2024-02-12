@@ -14,6 +14,8 @@ import PersonalYear, {
 } from "@/components/cycle/personal-year";
 import { getPersonalYearMeaning } from "@/lib/request";
 import Peak from "@/components/cycle/peak";
+import { Metadata } from "next";
+
 const Cycle = () => {
   const searchParams = useSearchParams();
   const day = searchParams.get("day") || "";
