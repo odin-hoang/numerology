@@ -31,7 +31,7 @@ const Cycle = () => {
       const data = await getPersonalYearMeaning(personalYear);
       setData(data);
     })();
-  }, []);
+  }, [personalYear]);
   const [data, setData] = useState<TPersonalYear[]>([]);
   return (
     <div className="">

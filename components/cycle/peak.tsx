@@ -25,7 +25,7 @@ export default function Peak({ children, peak }: PeakProps) {
     getPeakMeaning(peak).then((data) => {
       setContent(data.meaning);
     });
-  }, []);
+  }, [peak]);
   const [content, setContent] = React.useState("");
   return (
     <AlertDialog>

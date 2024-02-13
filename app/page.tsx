@@ -173,13 +173,13 @@ export default function Home() {
       setMissingArrowsDoc(missingArrowsDoc);
     };
     fetchArrowsDoc();
-  }, [compoundChart]);
+  }, [compoundChart, name]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isForm, setIsForm] = useState(true);
   return (
     <main className="flex flex-col items-center justify-between px-12 gap-5 pb-12 ">
       {isForm ? (
-        <h1 className="mt-24 font-bold">Tra cứu thần số học</h1>
+        <h1 className="mt-24 font-bold">Tra cứu thần số học - Khai phá bản thân</h1>
       ) : (
         <Button
           variant={"outline"}
