@@ -61,7 +61,10 @@ const MeaningOfNumber = ({
           <p className="text-justify text-sm">{content}</p>
           <DrawerFooter>
             <DrawerClose>
-              <Button variant="outline">Xem tiếp</Button>
+              {/* <Button variant="outline">Xem tiếp</Button> */}
+              <span className="border px-4 py-2 rounded-md shadow-sm hover:bg-slate-100 text-sm ">
+                Xem tiếp
+              </span>
             </DrawerClose>
           </DrawerFooter>
         </div>

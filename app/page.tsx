@@ -30,6 +30,7 @@ import {
   calculateBirthChart,
   calculateCompleteNameNumber,
   calculateIsolatedNumber,
+  calculatePlane,
   calculatePowerOfName,
   calculateRulingNumber,
   removeVietnameseDiacritics,
@@ -85,7 +86,6 @@ export default function Home() {
     let dobStr = `${day}${month}${year}`;
     let dayOfBirth = `${day}-${month}-${year}`;
     const removedVNName = removeVietnameseDiacritics(name);
-    console.log(removedVNName);
     const { nameChart, outerExpression, soulUrge, completeNameNumber } =
       calculatePowerOfName(removedVNName);
     const rulingNumber = calculateRulingNumber(dobStr);
@@ -152,19 +152,17 @@ export default function Home() {
   ]);
   const isolatedNumbers = calculateIsolatedNumber(compoundChart);
   useEffect(() => {
-    const newCompoundChart = birthChart.map(
-      (value, index) => value + nameChart[index]
-    );
-    setCompoundChart(newCompoundChart);
-  }, [birthChart, nameChart]);
-  useEffect(() => {
-    (async () => {
-      const chartDoc = await getChartMeaning(compoundChart, name);
-      console.log("chartDoc", chartDoc);
+    const calculateAndSetData = async () => {
+      const newCompoundChart = birthChart.map(
+        (value, index) => value + nameChart[index]
+      );
+      setCompoundChart(newCompoundChart);
+
+      const chartDoc = await getChartMeaning(newCompoundChart, name);
       setChartDoc(chartDoc);
-    })();
-    const { individualArrows, missingArrows } = calculateArrows(compoundChart);
-    const fetchArrowsDoc = async () => {
+
+      const { individualArrows, missingArrows } =
+        calculateArrows(newCompoundChart);
       const { individualArrowsDoc, missingArrowsDoc } = await getArrowsDoc(
         individualArrows,
         missingArrows
@@ -172,14 +170,18 @@ export default function Home() {
       setIndividualArrowsDoc(individualArrowsDoc);
       setMissingArrowsDoc(missingArrowsDoc);
     };
-    fetchArrowsDoc();
-  }, [compoundChart, name]);
+
+    calculateAndSetData();
+  }, [birthChart, name, nameChart]);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isForm, setIsForm] = useState(true);
   return (
     <main className="flex flex-col items-center justify-between px-12 gap-5 pb-12 ">
       {isForm ? (
-        <h1 className="mt-24 font-bold">Tra cứu thần số học - Khai phá bản thân</h1>
+        <h1 className="mt-24 font-bold">
+          Tra cứu thần số học - Khai phá bản thân
+        </h1>
       ) : (
         <Button
           variant={"outline"}
@@ -285,33 +287,39 @@ export default function Home() {
                   </span>
                 </h2>
                 <blockquote className="text-justify text-sm">
-                  Một trong số những âm thanh được thừa nhận nhất đối với tai
-                  của mọi người là tên của họ. Chắc chắn bạn đã nhận thấy rằng,
-                  cho dù môi trường xung quanh ồn ào đến đâu, khi ai đó gọi tên
-                  bạn, sự chú ý của bạn ngay lập tức chuyển hướng sang họ. Tên
-                  của chúng ta đã trở thành một âm thanh rất quan trọng đối với
-                  chúng ta, cho dù đó là tên, tên thú cưng, biệt danh hay bất kỳ
-                  tên gọi nào chúng ta thích sử dụng. Trên thực tế, tên của
-                  chúng ta phải được coi là một phần được chấp nhận trong tính
-                  cách và biểu hiện của chúng ta. Một cái tên rất quan trọng vì
-                  những rung động của nó trở nên hợp nhất với chính chúng ta.
-                  Thuật ngữ rung động ngụ ý không chỉ tần số sóng âm thanh mà
-                  thậm chí rộng hơn là các rung động biểu tượng của tên như được
-                  biểu thị bằng mẫu số học của nó. Những rung động này ảnh hưởng
-                  đến chính tính cách và cá tính của chúng ta. Số tên hoàn chỉnh
-                  từ 2 đến 11 và sau đó là 22/ 4. Mức độ ảnh hưởng của Số tên
-                  hoàn chỉnh nằm trong mối quan hệ của nó với Số chủ đạo, chứ
-                  không phải bất kỳ đóng góp cụ thể nào của riêng nó. Số tên
-                  hoàn chỉnh có thể cân bằng hoặc củng cố sức mạnh của Số chủ
-                  đạo. Nếu Số tên hoàn chỉnh giống với Số chủ đạo, nó cung cấp
-                  sự củng cố lớn nhất cho Số chủ đạo. Nếu Số tên hoàn chỉnh khác
-                  với Số chủ đạo, nhưng cả hai đều ở trên cùng một Mặt phẳng (4,
-                  7 và 10 trên Mặt phẳng Vật lý; 2, 5, 8 và 11 trên Mặt phẳng
-                  Linh hồn; 3, 6 và 9 trên Mặt phẳng Tâm trí; và 22/4 cả trên
-                  Mặt phẳng Vật lý và Linh hồn), thì sự củng cố cân bằng được
-                  đưa ra trên Mặt phẳng đó. Cuối cùng, nếu một Số tên hoàn chỉnh
-                  nằm trên một mặt phẳng khác với Số cầm quyền, một phạm vi rung
-                  động rộng hơn được cung cấp để mở rộng tính cách.
+                  Con số của tên gọi là số tên hoàn chỉnh, được tính bằng tổng
+                  quy đổi mỗi chữ cái trong tên thành số. Chắc chắn bạn đã nhận
+                  thấy rằng, cho dù môi trường xung quanh ồn ào đến đâu, khi ai
+                  đó gọi tên bạn, sự chú ý của bạn ngay lập tức chuyển hướng
+                  sang họ. Tên của chúng ta đã trở thành một âm thanh rất quan
+                  trọng đối với chúng ta, cho dù đó là tên, tên thú cưng, biệt
+                  danh hay bất kỳ tên gọi nào chúng ta thích sử dụng. Trên thực
+                  tế, tên của chúng ta phải được coi là một phần được chấp nhận
+                  trong tính cách và biểu hiện của chúng ta. Một cái tên rất
+                  quan trọng vì những rung động âm thanh của nó trở nên hợp nhất
+                  với chính chúng ta. Những rung động này ảnh hưởng đến chính
+                  tính cách của chúng ta. Số tên hoàn chỉnh có thể cân bằng hoặc
+                  củng cố sức mạnh của Số chủ đạo.
+                  <p>
+                    {completeNameNumber === rulingNumber ? (
+                      <span>
+                        Số tên hoàn chỉnh cung cấp sự củng cố lớn nhất cho Số
+                        chủ đạo.
+                      </span>
+                    ) : calculatePlane(rulingNumber, completeNameNumber) ? (
+                      <span>
+                        Số tên hoàn chỉnh và số chủ đạo cùng nằm trên một mặt
+                        phẳng thì sự củng cố cân bằng được đưa ra trên mặt phẳng
+                        đó{" "}
+                      </span>
+                    ) : (
+                      <span>
+                        Số tên hoàn chỉnh nằm trên một mặt phẳng khác với Số chủ
+                        đạo, một phạm vi rung động rộng hơn được cung cấp để mở
+                        rộng tính cách.
+                      </span>
+                    )}
+                  </p>
                   <QuoteIcon />
                 </blockquote>
                 <PowerOfName
@@ -320,21 +328,11 @@ export default function Home() {
                 />
                 <h2 className="font-bold">Kết hợp tên và ngày sinh</h2>
                 <blockquote className="text-justify text-sm">
-                  Khía cạnh thứ ba của số học tên là chìa khóa cho sức mạnh
-                  chung của tên. Đây được gọi là Số tên đầy đủ. Nó có liên quan
-                  đến, nhưng ít mạnh hơn Số cầm quyền. Số tên hoàn chỉnh có được
-                  bằng cách cộng tất cả các số của một tên, sau đó tính tổng
-                  chúng theo cách tương tự như đã được thực hiện để có được Số
-                  cầm quyền. (Hãy nhớ sử dụng tên bạn xác định rõ nhất, cho dù
-                  đó là tên, biệt hiệu, tên đệm hay tên mới mà bạn đã chọn để áp
-                  dụng.)
-                  <br /> Biểu đồ tên có cung cấp bất kỳ điểm mạnh nào cân bằng
-                  điểm yếu trên Biểu đồ sinh không? Đây là chức năng mong muốn
-                  nhất của Biểu đồ tên. Ví dụ, nếu Biểu đồ sinh có Mũi tên quá
-                  mẫn cảm (số 2, 5 và 8) và Biểu đồ tên có Mũi tên cân bằng cảm
-                  xúc (2, 5 và 8), thì chúng ta có sự cân bằng mong muốn nhất.
-                  Nếu Biểu đồ tên chỉ có một hoặc hai số trên Soul Plane, điều
-                  này vẫn có thể cung cấp một số cân bằng có giá trị.
+                  Biểu đồ ngày sinh cung cấp ý nghĩa chính về tính cách. Bên
+                  cạnh đó, mỗi cái tên làm cân bằng hoặc tăng thêm các con số ảo
+                  vào biểu đồ ngày sinh. Biểu đồ tên lấp đầy các ô còn thiếu
+                  trong biểu đồ ngày sinh là chức năng mong muốn nhất. Cái tên
+                  mọi người thường xuyên gọi bạn sẽ có ảnh hưởng lớn hơn.
                   <QuoteIcon />
                 </blockquote>
                 <div className="text-left w-full">

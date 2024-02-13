@@ -60,6 +60,26 @@ export function calculateCompleteNameNumber(num: number) {
   }
   return num;
 }
+export function calculatePlane(
+  rulingNumber: number,
+  completeNameNumber: number
+) {
+  const physicalPlane = [1, 4, 7, 10, 22];
+  const soulPlane = [2, 5, 8, 11, 22];
+  const mentalPlane = [3, 6, 9];
+  const planes = [physicalPlane, soulPlane, mentalPlane];
+  let result = false;
+  for (const plane of planes) {
+    console.log("Plane: ", plane);
+    if (plane.includes(rulingNumber) && plane.includes(completeNameNumber)) {
+      console.log("Result", result);
+      result = true;
+      break;
+    }
+  }
+  return result;
+}
+
 export function calculateBirthChart(dob: string) {
   let newBirthChart = Array(9).fill(0);
   for (let i = 0; i < dob.length; i++) {

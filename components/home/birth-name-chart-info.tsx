@@ -57,7 +57,7 @@ const BirthNameChartInfo = ({
           ))}
         </Accordion>
       ) : (
-        <p className="text-sm">
+        <p className="text-sm text-justify">
           Việc thiếu Mũi tên không biểu thị bất kỳ thuộc tính đặc biệt nào khác
           ngoài việc chỉ ra rằng người đó cần dành nhiều thời gian và sự kiên
           trì hơn để phát triển thế mạnh của họ so với những gì có thể có. Họ
@@ -65,10 +65,10 @@ const BirthNameChartInfo = ({
           các tình huống xã hội và nghề nghiệp. Bài học chính mà họ cần phát
           triển là sự quyết đoán khôn ngoan. <br />
           Trẻ em không có Mũi tên khá dễ tính và thường khá hạnh phúc trong cuộc
-          sống. Tuy nhiên, chúng không nên được coi là điều hiển nhiên. Thay vào
-          đó, họ nên được khuyến khích với sự chăm sóc yêu thương để làm những
-          việc mà họ thích, điều này sẽ giúp họ trở nên quyết đoán hơn về những
-          điều đặc biệt quan trọng đối với họ.
+          sống. Tuy nhiên, họ không nên coi đó là điều hiển nhiên. Thay vào đó,
+          họ nên được khuyến khích với sự chăm sóc yêu thương để làm những việc
+          mà họ thích, điều này sẽ giúp họ trở nên quyết đoán hơn về những điều
+          đặc biệt quan trọng đối với họ.
         </p>
       )}
       {!!missingArrowsDoc.length && (
