@@ -50,14 +50,14 @@ const BirthNameChartInfo = ({
                 {nameArrowsDict[ia.key as keyof typeof nameArrowsDict][1]}{" "}
                 {ia.value.join("-")}
               </AccordionTrigger>
-              <AccordionContent className="text-justify text-sm">
+              <AccordionContent className="text-justify ">
                 {ia.meaning?.meaning}
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
       ) : (
-        <p className="text-sm text-justify">
+        <p className=" text-justify">
           Việc thiếu Mũi tên không biểu thị bất kỳ thuộc tính đặc biệt nào khác
           ngoài việc chỉ ra rằng người đó cần dành nhiều thời gian và sự kiên
           trì hơn để phát triển thế mạnh của họ so với những gì có thể có. Họ
@@ -84,7 +84,7 @@ const BirthNameChartInfo = ({
                   {nameArrowsDict[ia.key as keyof typeof nameArrowsDict][0]}{" "}
                   {ia.value.join("-")}
                 </AccordionTrigger>
-                <AccordionContent className="text-justify text-sm">
+                <AccordionContent className="text-justify ">
                   {ia.meaning?.meaning}
                 </AccordionContent>
               </AccordionItem>

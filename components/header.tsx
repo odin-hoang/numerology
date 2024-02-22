@@ -6,7 +6,7 @@ import logo from "../assets/logo.png";
 import Link from "next/link";
 const Header = () => {
   return (
-    <header className="p-4 flex items-center gap-5 border-b fixed bg-white w-full z-50">
+    <header className="h-14 px-4 flex items-center gap-5 border-b fixed backdrop-blur bg-white/30 w-full z-50">
       <Link href={"/"}>
         <Image src={logo} width={30} height={30} alt="Logo" />
       </Link>

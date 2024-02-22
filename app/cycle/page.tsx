@@ -35,11 +35,11 @@ const Cycle = () => {
   const [data, setData] = useState<TPersonalYear[]>([]);
   return (
     <div className="">
-      <h1 className="text-center pb-0 font-bold">Đỉnh cao cuộc đời</h1>
-      <p className="text-center text-sm text-balance pb-4 text-slate-400">
+      <h1 className="text-center pb-0 font-bold text-lg">Đỉnh cao cuộc đời</h1>
+      <p className="text-center  text-balance pb-4 text-slate-400 ">
         Định hướng nên làm trong năm đỉnh cao
       </p>
-      <p className="text-sm text-justify pb-4">
+      <p className=" text-justify pb-4">
         Bốn kim tự tháp được xây dựng để đại diện cho cuộc sống của con người
         qua những năm trưởng thành. Chúng đại diện cho khoảng thời gian 27 năm,
         bao gồm ba chu kỳ, mỗi chu kỳ gồm 9 năm. Độ tuổi mà mỗi người bắt đầu đi
@@ -96,17 +96,17 @@ const Cycle = () => {
         </Peak>
 
         {/* Age mid */}
-        <h2 className="absolute bottom-[70px] left-[83px] text-sm">
+        <h2 className="absolute bottom-[70px] left-[83px] ">
           {36 - +rulingNumber}
         </h2>
-        <h2 className="absolute bottom-[70px] right-[85px] text-sm">
+        <h2 className="absolute bottom-[70px] right-[85px] ">
           {36 - +rulingNumber + 9}
         </h2>
-        <h2 className="absolute top-[100px] translate-x-[-50%] left-[50%] text-sm">
+        <h2 className="absolute top-[100px] translate-x-[-50%] left-[50%] ">
           {36 - +rulingNumber + 18}
         </h2>
         {/* top */}
-        <h2 className="absolute top-[35px] translate-x-[-50%] left-[50%] text-sm">
+        <h2 className="absolute top-[35px] translate-x-[-50%] left-[50%] ">
           {36 - +rulingNumber + 27}
         </h2>
       </div>
