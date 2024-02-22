@@ -3,6 +3,17 @@ import { TPersonalYear } from "@/components/cycle/personal-year";
 import { Arrow } from "@/components/home/birth-name-chart-info";
 const baseURL = "https://numerology-qdl0.onrender.com/api";
 // const baseURL = "http://localhost:2024/api";
+export async function saveHistory(name: string, dob: string) {
+  const res = await fetch(`${baseURL}/history`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, dob }),
+  });
+  const data = await res.json();
+  return data;
+}
 export async function getRulingNumberMeaning(rn: number, dobStr: string) {
   // const res = await fetch(
   //   `https://numerology-qdl0.onrender.com/api/ruling-number/${rn}`

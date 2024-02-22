@@ -55,6 +55,7 @@ import {
   getChartMeaning,
   getPowerOfNameMeaning,
   getRulingNumberMeaning,
+  saveHistory,
 } from "@/lib/request";
 import { MagnifyingGlassIcon, SymbolIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
@@ -86,7 +87,7 @@ export default function Home() {
     const year = date.getFullYear();
     let dobStr = `${day}${month}${year}`;
     let dayOfBirth = `${day}-${month}-${year}`;
-
+    const history = await saveHistory(name, dayOfBirth);
     const removedVNName = removeVietnameseDiacritics(name);
     const { nameChart, outerExpression, soulUrge, completeNameNumber } =
       calculatePowerOfName(removedVNName);
