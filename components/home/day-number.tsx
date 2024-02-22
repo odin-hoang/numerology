@@ -13,8 +13,8 @@ export default function DayNumberMeaning({ dayNumber }: DayNumberMeaningProps) {
   const [meaning, setMeaning] = useState("");
   return (
     <div>
-      <h2 className="font-bold text-center leading-10">
-        Con số ngày sinh{" "}
+      <h2 className="font-bold text-center leading-10 ">
+        <span className="font-merienda">Con số ngày sinh </span>
         <span className="bg-gradient-to-t inline-block from-rose-400 to-emerald-400 rounded-full w-9 h-9 text-center leading-9 font-bold text-white">
           {dayNumber}
         </span>
