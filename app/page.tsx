@@ -73,7 +73,7 @@ export default function Home() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      dob: "2024-01-01",
+      dob: new Date().toISOString().slice(0, 10),
     },
   });
   async function onSubmit(data: z.infer<typeof formSchema>) {
@@ -273,7 +273,12 @@ export default function Home() {
                       />
                     </FormControl>
                     <FormDescription>
-                      Tên mọi người gọi bạn, không nhất thiết là tên đầy đủ.{" "}
+                      Cái tên mà mọi người thường xuyên gọi bạn, đó có thể là
+                      tên thật, họ đệm và tên, biệt danh,...{" "}
+                      <b>
+                        không bắt buộc cả họ và tên trừ khi mọi người thường
+                        xuyên gọi bạn như thế.
+                      </b>{" "}
                       <br /> <i>Ví dụ: An, Đức An, Olivia, Đăng Quang,...</i>
                     </FormDescription>
                     <FormMessage />
@@ -310,8 +315,8 @@ export default function Home() {
                   </h2>
                   <blockquote className="text-justify">
                     {rulingNumberDoc.description}
-                    <QuoteIcon />
                   </blockquote>
+                  <QuoteIcon />
                   <RulingInfo
                     lifePurpose={rulingNumberDoc.lifePurpose}
                     bestExpression={rulingNumberDoc.bestExpression}
@@ -346,36 +351,38 @@ export default function Home() {
                     whileInView="visibleContent"
                     viewport={{ once: true }}
                   >
-                    Con số của tên gọi là số tên hoàn chỉnh, được tính bằng tổng
-                    quy đổi mỗi chữ cái trong tên thành số. Chắc chắn bạn đã
-                    nhận thấy rằng, cho dù môi trường xung quanh ồn ào đến đâu,
-                    khi ai đó gọi tên bạn, sự chú ý của bạn ngay lập tức chuyển
-                    hướng sang họ. Tên của chúng ta đã trở thành một âm thanh
-                    rất quan trọng đối với chúng ta, cho dù đó là tên, tên thú
-                    cưng, biệt danh hay bất kỳ tên gọi nào chúng ta thích sử
+                    Con số của tên gọi là <b>số tên hoàn chỉnh</b>, được tính
+                    bằng tổng quy đổi mỗi chữ cái trong tên thành số. Chắc chắn
+                    bạn đã nhận thấy rằng, cho dù môi trường xung quanh ồn ào
+                    đến đâu, khi ai đó gọi tên bạn, sự chú ý của bạn ngay lập
+                    tức chuyển hướng sang họ. Tên của chúng ta đã trở thành một
+                    âm thanh rất quan trọng đối với chúng ta, cho dù đó là tên
+                    thật, biệt danh hay bất kỳ tên gọi nào chúng ta thích sử
                     dụng. Trên thực tế, tên của chúng ta phải được coi là một
                     phần được chấp nhận trong tính cách và biểu hiện của chúng
                     ta. Một cái tên rất quan trọng vì những rung động âm thanh
                     của nó trở nên hợp nhất với chính chúng ta. Những rung động
-                    này ảnh hưởng đến chính tính cách của chúng ta. Số tên hoàn
-                    chỉnh có thể cân bằng hoặc củng cố sức mạnh của Số chủ đạo.
+                    này ảnh hưởng đến chính tính cách của chúng ta.{" "}
+                    <b>Số tên hoàn chỉnh</b> có thể cân bằng hoặc củng cố sức
+                    mạnh của Số chủ đạo.
                     <p>
+                      <br />
                       {completeNameNumber === rulingNumber ? (
                         <span>
-                          Số tên hoàn chỉnh cung cấp sự củng cố lớn nhất cho Số
-                          chủ đạo.
+                          <b>Số tên hoàn chỉnh</b> cung cấp sự củng cố lớn nhất
+                          cho Số chủ đạo.
                         </span>
                       ) : calculatePlane(rulingNumber, completeNameNumber) ? (
                         <span>
-                          Số tên hoàn chỉnh và số chủ đạo cùng nằm trên một mặt
-                          phẳng thì sự củng cố cân bằng được đưa ra trên mặt
-                          phẳng đó{" "}
+                          <b>Số tên hoàn chỉnh</b> và số chủ đạo cùng nằm trên
+                          một mặt phẳng thì sự củng cố cân bằng được đưa ra trên
+                          mặt phẳng đó{" "}
                         </span>
                       ) : (
                         <span>
-                          Số tên hoàn chỉnh nằm trên một mặt phẳng khác với Số
-                          chủ đạo, một phạm vi rung động rộng hơn được cung cấp
-                          để mở rộng tính cách.
+                          <b>Số tên hoàn chỉnh</b> nằm trên một mặt phẳng khác
+                          với Số chủ đạo, một phạm vi rung động rộng hơn được
+                          cung cấp để mở rộng tính cách.
                         </span>
                       )}
                     </p>
@@ -428,8 +435,54 @@ export default function Home() {
                           <TableCell className="border-r  font-bold">
                             <MeaningOfNumber
                               isolatedContent={
-                                isolatedNumbers.includes(3) &&
-                                "Điều này có nghĩa là tiềm năng tâm trí mạnh mẽ của họ có thể dễ dàng được khuếch tán, vì nó không liên quan đến Mặt phẳng Vật lý, và sức mạnh của nó không dễ dàng được đưa vào thực hành. Vấn đề này có thể trở nên phức tạp hơn khi có nhiều hơn một 3 người bị cô lập, vì khi đó trí tưởng tượng có thể chạy loạn và những người này có thể trở thành hoang tưởng hoặc 'huyền thoại trong tâm trí của chính họ'."
+                                isolatedNumbers.includes(3) && (
+                                  <p>
+                                    Khi một hoặc nhiều số 3 xuất hiện mà không
+                                    có sự hiện diện của số 2, 5 hoặc 6 trong
+                                    biểu đồ. Điều này có nghĩa là tiềm năng tâm
+                                    trí mạnh mẽ của họ có thể dễ dàng bị phân
+                                    tán, vì nó không kết nối đến Mặt phẳng Vật
+                                    lý, và sức mạnh của nó không dễ dàng được
+                                    đưa vào thực tế. Vấn đề này có thể trở nên
+                                    nghiêm trọng hơn khi có nhiều hơn một số 3
+                                    bị cô lập, vì khi đó trí tưởng tượng có thể
+                                    trở nên không kiểm soát và họ có thể bắt đầu
+                                    tin vào các sự kiện, ý tưởng hoặc kỳ vọng mà
+                                    không có sự hỗ trợ từ thực tế hoặc hiện
+                                    thực.
+                                    <div className="relative py-2 mt-4 px-4  rounded-sm shadow font-nunito bg-tuscany bg-no-repeat bg-cover bg-center text-white/90  ">
+                                      <div className="absolute inset-0 rounded-sm bg-yellow-800/40 z-0"></div>
+                                      <span className="relative z-10">
+                                        <b>Cân bằng:</b> bằng cách phát triển
+                                        các phẩm chất liên quan đến các số bị
+                                        thiếu.
+                                      </span>
+                                      <ul className="space-y-1 relative z-10">
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 2
+                                          </span>
+                                          : nuôi dưỡng trực giác, tính nhạy cảm.
+                                        </li>
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 5
+                                          </span>
+                                          : phát triển thêm tình yêu và lòng
+                                          trắc ẩn trong biểu hiện và học cách tự
+                                          do bày tỏ các cảm xúc tích cực của
+                                          mình thay vì kìm nén chúng.
+                                        </li>
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 6
+                                          </span>
+                                          : khuyến khích sáng tạo.
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </p>
+                                )
                               }
                               content={chartDoc[2] && chartDoc[2].meaning}
                             >
@@ -454,29 +507,51 @@ export default function Home() {
                               isolatedContent={
                                 isolatedNumbers.includes(9) && (
                                   <p>
-                                    Khi các số 5, 6 và 8 bị thiếu trong Biểu đồ
-                                    sinh và người đó có một hoặc nhiều số 9 (như
-                                    tất cả trong thế kỷ 20), cá nhân đó thể hiện
-                                    chủ nghĩa lý tưởng không thực tế, tham vọng
-                                    đơn phương hoặc cả hai. Điều này thường phụ
-                                    thuộc vào số 9 trên Biểu đồ sinh. Nếu một số
-                                    9 duy nhất, nó thường là dấu hiệu của tham
-                                    vọng chưa được thực hiện; nếu một số 9 kép,
-                                    chủ nghĩa duy tâm không thực tế; Nếu ba hoặc
-                                    bốn số 9, cả hai đều có thể chiếm ưu thế. Từ
-                                    các biện pháp khắc phục được khuyến nghị cho
-                                    các số bị cô lập khác, kỹ thuật này rõ ràng
-                                    rất dễ thực hiện. Trong trường hợp này, phẩm
-                                    chất của 5, sau đó là 6 và 8 cần được khắc
-                                    sâu vào biểu hiện của người đó. Trong số
-                                    này, có lẽ 5 là quan trọng nhất nếu người đó
-                                    không có số 7 trên Biểu đồ sinh của họ, vì
-                                    năm người sẽ liên kết số 9 với biểu hiện
-                                    thông qua bản ngã của số 1. Nếu chúng cũng
-                                    có 7, thì lũy thừa của cả hai số (5 và 8)
-                                    nên được phát triển để kết nối tối ưu giữa
-                                    chủ nghĩa lý tưởng tham vọng của 9 và Mặt
-                                    phẳng thực hành vật lý.
+                                    Khi các số 5, 6 và 8 bị thiếu trong biểu đồ
+                                    và người đó có một hoặc nhiều số 9, người đó
+                                    thường biểu thị của lý tưởng không thực tế,
+                                    khao khát không được đáp lại, hoặc cả hai.{" "}
+                                    <br />
+                                    Điều này thường phụ thuộc vào số lượng số 9
+                                    trên biểu đồ. Nếu một số 9 duy nhất, nó
+                                    thường là dấu hiệu của tham vọng chưa được
+                                    thực hiện; nếu có hai số 9, lý tưởng không
+                                    thực tế; nếu ba hoặc bốn số 9, cả hai điều
+                                    trên đều có thể.
+                                    <div className="relative py-2 mt-4 px-4  rounded-sm shadow font-nunito bg-tuscany bg-no-repeat bg-cover bg-center text-white/90  ">
+                                      <div className="absolute inset-0 rounded-sm bg-yellow-800/40 z-0"></div>
+                                      <span className="relative z-10">
+                                        <b>Điều chỉnh:</b> bằng cách phát triển
+                                        các phẩm chất liên quan đến các số bị
+                                        thiếu.
+                                      </span>
+                                      <ul className="space-y-1 relative z-10">
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 5
+                                          </span>
+                                          : phát triển thêm tình yêu và lòng
+                                          trắc ẩn trong biểu hiện và học cách tự
+                                          do bày tỏ các cảm xúc tích cực của
+                                          mình thay vì kìm nén chúng.
+                                        </li>
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 6
+                                          </span>
+                                          : nuôi dưỡng trực giác, tính nhạy cảm.
+                                        </li>
+
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 8
+                                          </span>
+                                          : học cách áp dụng trực giác thực tế
+                                          thông qua hành động yêu thương, phát
+                                          triển khả năng độc lập.
+                                        </li>
+                                      </ul>
+                                    </div>
                                   </p>
                                 )
                               }
@@ -531,47 +606,57 @@ export default function Home() {
                                     sinh, số 1 sẽ bị cô lập với tất cả các số
                                     khác. Vì 1 là con số tượng trưng cho sự thể
                                     hiện của bản ngã con người, sự cô lập của nó
-                                    trên Biểu đồ sinh cho thấy lý do tại sao
+                                    trên biểu đồ sinh cho thấy lý do tại sao
                                     những người này thường cảm thấy bị cô lập và
                                     hiểu lầm khi họ cố gắng giải thích cảm xúc
                                     của mình cho người khác, đặc biệt nếu họ có
-                                    1 1 duy nhất. Biểu đồ sinh như vậy sẽ có sự
-                                    tập trung nhiều của các con số trên Mặt
-                                    phẳng Tâm trí và / hoặc trên Mũi tên Hoạt
-                                    động. Sự tập trung nhiều của các con số trên
-                                    Mũi tên hoạt động chỉ ra rằng người đó gặp
-                                    khó khăn trong việc giải thích rõ ràng cho
-                                    người khác các khái niệm và / hoặc hành động
-                                    họ chọn thực hiện. Nếu số lượng của họ tập
-                                    trung nhiều hơn vào Mặt phẳng Tâm trí, người
-                                    đó có thể bị coi là lười biếng hoặc không
-                                    đáng tin cậy vì rất nhiều điều đang diễn ra
-                                    trong đầu họ sẽ không được chuyển thành biểu
-                                    hiện thực tế hoặc vì họ cam kết làm những
-                                    việc hiếm khi được thực hiện. Điều này có
-                                    thể khiến người khác nghĩ rằng những người
-                                    bị cô lập là không đáng tin cậy khi, nếu có
-                                    hiệu lực, họ hầu như không nhận thức được
-                                    khía cạnh này trong bản chất của họ. Trừ khi
-                                    nó được sửa chữa, nó có thể dẫn đến sự cô
-                                    đơn để bản ngã bị cô lập phóng đại thành một
-                                    người bị cô lập. Sửa chữa là dễ dàng. Đối
-                                    với mỗi số bị cô lập, một chất lượng còn
-                                    thiếu sẽ tích hợp Biểu đồ sinh và khử cô lập
-                                    từng số được đại diện bởi số 5 ở trung tâm
-                                    của Biểu đồ sinh. Nói chung, điều này ngụ ý
-                                    sự cần thiết cho bất kỳ người nào có một
-                                    hoặc nhiều số bị cô lập để phát triển tình
-                                    yêu và lòng trắc ẩn hơn trong biểu hiện của
-                                    họ, và học cách tự do thể hiện cảm xúc tích
-                                    cực của họ hơn là đóng chai chúng. Khi chỉ
-                                    có số 1 bị cô lập, việc phát triển các phẩm
-                                    chất được chỉ ra bởi 2 hoặc 4 cũng có thể
-                                    giúp ích. Ví dụ, phát triển trực giác của 2
-                                    để biểu hiện của bản ngã có thể được kết nối
-                                    với sức mạnh của phân tích (3), và thực hành
-                                    với logic được cải thiện, kiên nhẫn và thực
-                                    tế của 4.
+                                    duy nhất một số 1. Họ gặp khó khăn trong
+                                    việc giải thích rõ ràng cho người khác các
+                                    khái niệm hoặc hành động họ thực hiện.{" "}
+                                    <br />
+                                    Nếu các số còn lại tập trung vào Mặt phẳng
+                                    tâm trí (3-6-9), người đó có thể bị coi là
+                                    lười biếng hoặc không đáng tin cậy vì rất
+                                    nhiều điều đang diễn ra trong đầu họ sẽ
+                                    không được chuyển thành biểu hiện thực tế
+                                    hoặc vì họ cam kết làm những việc hiếm khi
+                                    được thực hiện. Điều này có thể khiến người
+                                    khác nghĩ rằng những người có số 1 bị cô lập
+                                    là không đáng tin cậy khi thực tế, họ thường
+                                    không nhận ra khía cạnh này của bản tính của
+                                    mình.
+                                    <div className="relative py-2 mt-4 px-4  rounded-sm shadow font-nunito bg-tuscany bg-no-repeat bg-cover bg-center text-white/90  ">
+                                      <div className="absolute inset-0 bg-yellow-800/40 z-0 rounded-sm "></div>
+                                      <b className="z-10 relative">Cân bằng:</b>{" "}
+                                      <span className="relative z-10">
+                                        bằng cách phát triển các phẩm chất liên
+                                        quan đến các số bị thiếu.
+                                      </span>
+                                      <ul className="space-y-1 relative z-10">
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 2
+                                          </span>
+                                          : nuôi dưỡng trực giác, tính nhạy cảm.
+                                        </li>
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 5
+                                          </span>
+                                          : phát triển thêm tình yêu và lòng
+                                          trắc ẩn trong biểu hiện và học cách tự
+                                          do bày tỏ các cảm xúc tích cực của
+                                          mình thay vì kìm nén chúng.
+                                        </li>
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 4
+                                          </span>
+                                          : thực hành cải thiện logic, kiên nhẫn
+                                          và thực tế.
+                                        </li>
+                                      </ul>
+                                    </div>
                                   </p>
                                 )
                               }
@@ -599,49 +684,80 @@ export default function Home() {
                                 isolatedNumbers.includes(7) && (
                                   <p>
                                     Khi một hoặc nhiều số 7 chiếm góc dưới bên
-                                    phải của Biểu đồ sinh mà không có 4, 5 hoặc
-                                    8 tiếp xúc với họ, những hy sinh và bài học
-                                    mà người đó học được thường nhất thiết phải
-                                    lặp lại. Kinh nghiệm học tập phải được dịch
-                                    sang tâm trí, để bài học của nó được nhận ra
-                                    và hiểu. Nhưng khi khu vực học tập này bị cô
-                                    lập khỏi Mặt phẳng Tâm trí, những bài học
-                                    tương tự hoặc tương tự phải được lặp lại cho
-                                    đến khi, bằng tần suất, chúng được nhận ra.
-                                    Điều này ngụ ý rằng những người này có thể
-                                    mất sức khỏe, tình yêu hoặc tài sản tiền bạc
-                                    trong những dịp lặp đi lặp lại cho đến khi
-                                    bài học thích hợp được mang về nhà cho họ.
-                                    Mặc dù điều này thường gây tổn thương cho
-                                    người hy sinh, nhưng họ có xu hướng chấp
-                                    nhận nó như là định mệnh hoặc không thể
-                                    tránh khỏi. Nỗi đau thường có vẻ tồi tệ hơn
-                                    đối với bạn bè và những người thân yêu của
-                                    người phải hy sinh. Hãy nhớ rằng, 7 là số
-                                    lượng hiểu biết triết học, vì vậy người có 7
-                                    hoặc 7 bị cô lập có thể hiểu rõ hơn về những
-                                    gì đã xảy ra với họ sau đó là những người
-                                    xung quanh. Để giảm thiểu tổn thương hoặc hy
-                                    sinh, người đó cần phát triển sức mạnh vốn
-                                    có trong các số 4, 5 và 8. Chúng tôi đã đề
-                                    cập đến các phẩm chất của 4 và 5 với các số
-                                    bị cô lập nói trên, nhưng bây giờ chúng tôi
-                                    thấy rằng sự phát triển của 4 giúp 7 bị cô
-                                    lập thống nhất với biểu hiện bản ngã của 1
-                                    để cảm thấy ổn khi yêu cầu giúp đỡ hoặc
-                                    hướng dẫn. Đồng thời, điều này phát triển
-                                    Mũi tên thực tiễn để người đó phát triển một
-                                    cách tiếp cận thực tế đối với trải nghiệm
-                                    cuộc sống của họ. Để phát triển sức mạnh của
-                                    số 8 trên Biểu đồ sinh, 7 người bị cô lập
-                                    phải trở nên khôn ngoan hơn khi áp dụng trực
-                                    giác thực tế thông qua hành động yêu thương.
-                                    Điều này cũng giúp phát triển ý thức độc lập
-                                    của họ, và cuối cùng xây dựng Mũi tên hoạt
-                                    động. Ở đây, 5 và 8 hoạt động hoàn toàn hài
-                                    hòa, cung cấp một cơ hội tuyệt vời cho sự
-                                    phát triển của Mặt phẳng linh hồn của người
-                                    đó.
+                                    phải của Biểu đồ mà không có các số 4, 5
+                                    hoặc 8 xung quanh, những hy sinh và bài học
+                                    mà người đó phải học thường phải lặp lại.{" "}
+                                    <br />
+                                    Trải nghiệm học hỏi phải được dịch thành tư
+                                    duy, để bài học được nhận ra và hiểu được.
+                                    Nhưng khi khu vực học hỏi này bị cô lập khỏi
+                                    Mặt phẳng Tâm Trí (3-6-9), các bài học giống
+                                    nhau hoặc tương tự phải được lặp lại cho đến
+                                    khi chúng được nhận biết thông qua tần suất.
+                                    Những người này có thể trải qua mất mát
+                                    trong sức khoẻ, tình yêu hoặc tài sản tiền
+                                    bạc lặp đi lặp lại cho đến khi người đó học
+                                    được bài học cần thiết từ các trải nghiệm
+                                    của mình và áp dụng chúng vào cuộc sống của
+                                    mình. Mặc dù điều này thường gây đau đớn cho
+                                    người hy sinh, họ thường chấp nhận nó như
+                                    "định mệnh" hoặc sự không thể tránh khỏi. Sự
+                                    đau đớn thường dường như nặng hơn đối với
+                                    bạn bè và người thân của người phải hy sinh.{" "}
+                                    <br />
+                                    Hãy nhớ rằng, số 7 là số của sự hiểu biết
+                                    triết học, vì vậy những người có số 7 cô lập
+                                    hoặc số 7 chủ đạo có thể có khả năng hiểu rõ
+                                    hơn về những thách thức và bài học mà họ
+                                    phải đối mặt trong cuộc sống. Họ có thể có
+                                    khả năng phân tích và suy ngẫm sâu hơn về
+                                    những trải nghiệm của mình, giúp họ đối mặt
+                                    với những thách thức một cách nhẹ nhàng và
+                                    thông thái hơn.
+                                    <div className="relative py-2 mt-4 px-4  rounded-sm shadow font-nunito bg-tuscany bg-no-repeat bg-cover bg-center text-white/90  ">
+                                      <div className="absolute inset-0 bg-yellow-800/40 z-0 rounded-sm "></div>
+                                      <b className="z-10 relative">
+                                        Để giảm thiểu tổn thương:
+                                      </b>{" "}
+                                      <span className="relative z-10">
+                                        người đó cần phát triển sức mạnh vốn có
+                                        trong các số bị thiếu.
+                                      </span>
+                                      <ul className="space-y-1 relative z-10">
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 4
+                                          </span>
+                                          : thực hành cải thiện logic, kiên nhẫn
+                                          và thực tế. Hòa nhập với biểu hiện của
+                                          bản ngã số 1 để cảm thấy thoải mái khi
+                                          yêu cầu sự giúp đỡ hoặc hướng dẫn.
+                                          Đồng thời, điều này phát triển Mũi Tên
+                                          Thực Tiễn (1-4-7) để người đó phát
+                                          triển một cách tiếp cận thực tế đối
+                                          với các trải nghiệm của cuộc sống.
+                                        </li>
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 5
+                                          </span>
+                                          : phát triển thêm tình yêu và lòng
+                                          trắc ẩn trong biểu hiện và học cách tự
+                                          do bày tỏ các cảm xúc tích cực của
+                                          mình thay vì kìm nén chúng.
+                                        </li>
+                                        <li>
+                                          <span className="underline-offset-2 underline">
+                                            Số 8
+                                          </span>
+                                          : học cách áp dụng trực giác thực tế
+                                          thông qua hành động yêu thương. Điều
+                                          này cũng giúp phát triển cảm giác độc
+                                          lập của họ, và cuối cùng là xây dựng
+                                          Mũi Tên Hoạt Động (7-8-9)
+                                        </li>
+                                      </ul>
+                                    </div>
                                   </p>
                                 )
                               }

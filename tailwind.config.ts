@@ -24,6 +24,9 @@ const config = {
         nunito: ["Nunito", ...defaultTheme.fontFamily.sans],
         merienda: ["Merienda", ...defaultTheme.fontFamily.serif],
       },
+      backgroundImage: {
+        tuscany: "url('/tuscany.jpg')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
