@@ -701,7 +701,7 @@ export default function Home() {
                                     của mình và áp dụng chúng vào cuộc sống của
                                     mình. Mặc dù điều này thường gây đau đớn cho
                                     người hy sinh, họ thường chấp nhận nó như
-                                    "định mệnh" hoặc sự không thể tránh khỏi. Sự
+                                    định mệnh hoặc sự không thể tránh khỏi. Sự
                                     đau đớn thường dường như nặng hơn đối với
                                     bạn bè và người thân của người phải hy sinh.{" "}
                                     <br />
