@@ -19,7 +19,7 @@ export default function DayNumberMeaning({ dayNumber }: DayNumberMeaningProps) {
           {dayNumber}
         </span>
       </h2>
-      <p className="text-justify ">{meaning}</p>
+      <p className="text-left ">{meaning}</p>
     </div>
   );
 }

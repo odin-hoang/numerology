@@ -20,7 +20,7 @@ const PersonalYear = ({ py }: PersonalYearProps) => {
   const currentYear = new Date().getFullYear();
   return (
     <div>
-      <p className="text-justify  py-2">{py[0]?.description}</p>
+      <p className="text-left  py-2">{py[0]?.description}</p>
       <Accordion type="single" collapsible className="w-full px-4">
         {py.map((data) => (
           <AccordionItem value={data.month.toString()} key={data.month}>
@@ -36,7 +36,7 @@ const PersonalYear = ({ py }: PersonalYearProps) => {
                 <span className="text-white ">Hiện tại</span>
               )}
             </AccordionTrigger>
-            <AccordionContent className="text-justify">
+            <AccordionContent className="text-left">
               {data.meaning}
             </AccordionContent>
           </AccordionItem>

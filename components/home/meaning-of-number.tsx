@@ -47,7 +47,7 @@ const MeaningOfNumber = ({
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[100vw] lg:w-[900px] md:w-[600px] border shadow-sm rounded-sm my-2 ">
-                    <div className="bg-gradient-to-b overflow-auto max-h-[70vh] md:max-h-[400px] lg:max-h-[600px]  rounded-sm from-yellow-50 text-justify to-amber-50 p-4">
+                    <div className="bg-gradient-to-b overflow-auto max-h-[70vh] md:max-h-[400px] lg:max-h-[600px]  rounded-sm from-yellow-50 text-left to-amber-50 p-4">
                       {isolatedContent}
                     </div>
                   </PopoverContent>
@@ -58,7 +58,7 @@ const MeaningOfNumber = ({
               </h4>
             </div>
           </DrawerHeader>
-          <p className="text-justify ">{content}</p>
+          <p className="text-left ">{content}</p>
           <DrawerFooter>
             <DrawerClose>
               {/* <Button variant="outline">Xem tiếp</Button> */}

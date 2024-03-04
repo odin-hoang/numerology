@@ -36,7 +36,7 @@ const PowerOfName = ({ soulUrge, outerExpression }: PowerOfNameProps) => {
             {soulUrge.number}
           </span>
         </motion.h4>
-        <p className=" text-justify">{soulUrge.description}</p>
+        <p className=" text-left">{soulUrge.description}</p>
       </div>
       <div className="space-y-2">
         <motion.h4
@@ -53,7 +53,7 @@ const PowerOfName = ({ soulUrge, outerExpression }: PowerOfNameProps) => {
             {outerExpression.number}
           </span>
         </motion.h4>
-        <p className=" text-justify">{outerExpression.description}</p>
+        <p className=" text-left">{outerExpression.description}</p>
       </div>
     </div>
   );

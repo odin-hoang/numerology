@@ -313,7 +313,7 @@ export default function Home() {
                       {rulingNumber}
                     </span>
                   </h2>
-                  <blockquote className="text-justify">
+                  <blockquote className="text-left">
                     {rulingNumberDoc.description}
                   </blockquote>
                   <QuoteIcon />
@@ -345,7 +345,7 @@ export default function Home() {
                     </span>
                   </motion.h2>
                   <motion.blockquote
-                    className="text-justify"
+                    className="text-left"
                     variants={variants}
                     initial="hiddenContent"
                     whileInView="visibleContent"
@@ -395,7 +395,7 @@ export default function Home() {
                   <h2 className="font-bold font-merienda">
                     Kết hợp tên và ngày sinh
                   </h2>
-                  <motion.blockquote className="text-justify">
+                  <motion.blockquote className="text-left">
                     {"Biểu đồ ngày sinh cung cấp ý nghĩa chính về tính cách. Bên cạnh đó, mỗi cái tên làm cân bằng hoặc tăng thêm các con số ảo vào biểu đồ ngày sinh. Biểu đồ tên lấp đầy các ô còn thiếu trong biểu đồ ngày sinh là chức năng mong muốn nhất. Cái tên mọi người thường xuyên gọi bạn sẽ có ảnh hưởng lớn hơn."
                       .split(" ")
                       .map((el, i) => (
@@ -778,7 +778,7 @@ export default function Home() {
                     missingArrowsDoc={missingArrowsDoc}
                   ></BirthNameChartInfo>
                   <DayNumberMeaning dayNumber={dayNumber}></DayNumberMeaning>
-                  <p className="text-justify border p-2 rounded-sm bg-slate-100">
+                  <p className="text-left border p-2 rounded-sm bg-slate-100">
                     Hãy nhớ rằng, sức mạnh của Biểu đồ sinh ban đầu của bạn
                     không quan trọng bằng những gì bạn làm để lấp đầy khoảng
                     trống của nó. Một số người thành công nhất trong lịch sử đã

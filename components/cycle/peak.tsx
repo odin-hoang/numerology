@@ -33,7 +33,7 @@ export default function Peak({ children, peak }: PeakProps) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Đỉnh cao số {peak}</AlertDialogTitle>
-          <AlertDialogDescription className="max-h-[60vh] px-4 overflow-auto text-justify">
+          <AlertDialogDescription className="max-h-[60vh] px-4 overflow-auto text-left">
             {content}
           </AlertDialogDescription>
         </AlertDialogHeader>

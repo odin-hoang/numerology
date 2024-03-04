@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/footer";
@@ -7,7 +7,7 @@ import Header from "@/components/header";
 import ProgressBar from "@/components/progressBar";
 
 const inter = Inter({ subsets: ["latin"] });
-
+const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 export const metadata: Metadata = {
   verification: {
     google: "8UaoeAif1vdWk69dhGUQoFFOeQ1j1n7flQxHk_QdnsM",
@@ -42,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={space_grotesk.className}>
         <Header />
         <ProgressBar></ProgressBar>
         <div>{children}</div>

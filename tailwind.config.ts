@@ -23,6 +23,7 @@ const config = {
         rubik: ["Rubik", ...defaultTheme.fontFamily.sans],
         nunito: ["Nunito", ...defaultTheme.fontFamily.sans],
         merienda: ["Merienda", ...defaultTheme.fontFamily.serif],
+        "space-grotesk": ["Space Grotesk", ...defaultTheme.fontFamily.sans],
       },
       backgroundImage: {
         tuscany: "url('/tuscany.jpg')",

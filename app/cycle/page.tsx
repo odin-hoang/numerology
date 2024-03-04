@@ -39,7 +39,7 @@ const Cycle = () => {
       <p className="text-center  text-balance pb-4 text-slate-400 ">
         Định hướng nên làm trong năm đỉnh cao
       </p>
-      <p className=" text-justify pb-4">
+      <p className=" text-left pb-4">
         Bốn kim tự tháp được xây dựng để đại diện cho cuộc sống của con người
         qua những năm trưởng thành. Chúng đại diện cho khoảng thời gian 27 năm,
         bao gồm ba chu kỳ, mỗi chu kỳ gồm 9 năm. Độ tuổi mà mỗi người bắt đầu đi
