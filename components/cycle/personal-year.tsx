@@ -31,7 +31,7 @@ const PersonalYear = ({ py }: PersonalYearProps) => {
                 "px-2 rounded-sm",
                 currentMonth === data.month &&
                   "bg-gradient-to-bl from-sky-400 to-violet-400",
-                theme === "dark" && "hue-rotate-90"
+                theme === "dark" && "filter hue-rotate-90"
               )}
             >
               Tháng {data.month} / {currentYear}

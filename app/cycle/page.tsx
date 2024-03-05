@@ -55,7 +55,7 @@ const Cycle = () => {
             alt="peaks"
             className={cn(
               "w-full h-full object-cover",
-              theme === "dark" && "invert"
+              theme === "dark" && "filter invert"
             )}
           />
         </div>
@@ -122,7 +122,7 @@ const Cycle = () => {
         <span
           className={cn(
             "bg-gradient-to-bl inline-block  from-sky-400 to-violet-400 rounded-full w-10 h-10 text-center leading-10 font-bold text-white background-animate ring",
-            theme === "dark" && "hue-rotate-90"
+            theme === "dark" && "filter hue-rotate-90"
           )}
         >
           {personalYear}
