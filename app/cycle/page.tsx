@@ -34,7 +34,7 @@ const Cycle = () => {
     })();
   }, [personalYear]);
   const [data, setData] = useState<TPersonalYear[]>([]);
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   return (
     <div className="">
       <h1 className="text-center pb-0 font-bold text-lg">Đỉnh cao cuộc đời</h1>
@@ -55,7 +55,7 @@ const Cycle = () => {
             alt="peaks"
             className={cn(
               "w-full h-full object-cover",
-              theme === "dark" && "filter invert"
+              resolvedTheme === "dark" && "filter invert"
             )}
           />
         </div>
@@ -122,7 +122,7 @@ const Cycle = () => {
         <span
           className={cn(
             "bg-gradient-to-bl inline-block  from-sky-400 to-violet-400 rounded-full w-10 h-10 text-center leading-10 font-bold text-white background-animate ring",
-            theme === "dark" && "filter hue-rotate-90"
+            resolvedTheme === "dark" && "filter hue-rotate-90"
           )}
         >
           {personalYear}
