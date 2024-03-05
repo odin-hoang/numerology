@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 export type TPersonalYear = {
   personalYear: number;
   month: number;
@@ -18,6 +19,7 @@ export interface PersonalYearProps {
 const PersonalYear = ({ py }: PersonalYearProps) => {
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
+  const { theme } = useTheme();
   return (
     <div>
       <p className="text-left  py-2">{py[0]?.description}</p>
@@ -28,7 +30,8 @@ const PersonalYear = ({ py }: PersonalYearProps) => {
               className={cn(
                 "px-2 rounded-sm",
                 currentMonth === data.month &&
-                  "bg-gradient-to-tr from-cyan-300 to-sky-400"
+                  "bg-gradient-to-bl from-sky-400 to-violet-400",
+                theme === "dark" && "hue-rotate-90"
               )}
             >
               Tháng {data.month} / {currentYear}

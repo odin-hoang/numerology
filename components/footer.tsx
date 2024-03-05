@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <footer
       className={cn(
-        "fixed left-0 bottom-0 w-full text-center text-xs ease-linear bg-gradient-to-t from-orange-50 border-t transition-all to-white",
+        "fixed left-0 bottom-0 w-full text-center text-xs ease-linear border-t transition-all bg-background",
         !visible && `-bottom-[130px]`
       )}
     >

@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import ProgressBar from "@/components/progressBar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -43,11 +44,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={space_grotesk.className}>
-        <Header />
-        <ProgressBar></ProgressBar>
-        <div>{children}</div>
-        <Toaster></Toaster>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <ProgressBar></ProgressBar>
+          <div>{children}</div>
+          <Toaster></Toaster>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

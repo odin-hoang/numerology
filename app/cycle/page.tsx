@@ -8,6 +8,7 @@ import {
   calculateBottomPeaks,
   calculateCompleteNameNumber,
   calculateWorldYear,
+  cn,
 } from "@/lib/utils";
 import PersonalYear, {
   type TPersonalYear,
@@ -15,7 +16,7 @@ import PersonalYear, {
 import { getPersonalYearMeaning } from "@/lib/request";
 import Peak from "@/components/cycle/peak";
 import { Metadata } from "next";
-
+import { useTheme } from "next-themes";
 const Cycle = () => {
   const searchParams = useSearchParams();
   const day = searchParams.get("day") || "";
@@ -33,6 +34,7 @@ const Cycle = () => {
     })();
   }, [personalYear]);
   const [data, setData] = useState<TPersonalYear[]>([]);
+  const { theme } = useTheme();
   return (
     <div className="">
       <h1 className="text-center pb-0 font-bold text-lg">Đỉnh cao cuộc đời</h1>
@@ -51,7 +53,10 @@ const Cycle = () => {
           <Image
             src={peaks}
             alt="peaks"
-            className="w-full h-full object-cover"
+            className={cn(
+              "w-full h-full object-cover",
+              theme === "dark" && "invert"
+            )}
           />
         </div>
         {/* bottom */}
@@ -114,7 +119,12 @@ const Cycle = () => {
         Con số năm cá nhân {worldYear}
       </h1>
       <div className="text-center">
-        <span className="bg-gradient-to-bl inline-block  from-sky-400 to-violet-400 rounded-full w-10 h-10 text-center leading-10 font-bold text-white background-animate ring">
+        <span
+          className={cn(
+            "bg-gradient-to-bl inline-block  from-sky-400 to-violet-400 rounded-full w-10 h-10 text-center leading-10 font-bold text-white background-animate ring",
+            theme === "dark" && "hue-rotate-90"
+          )}
+        >
           {personalYear}
         </span>
       </div>

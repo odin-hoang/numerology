@@ -426,9 +426,12 @@ export default function Home() {
                   </div>
                   <div>
                     <Table className="w-[210px] h-[210px]">
+                      {/* biểu đồ ngày sinh */}
                       <TableCaption className="">
-                        Biểu đồ <b className="text-black/90">ngày sinh </b>+{" "}
-                        <span className="text-cyan-600 font-normal">tên</span>
+                        Biểu đồ <b className="">ngày sinh </b>+{" "}
+                        <span className="text-cyan-600 font-normal">
+                          {name}
+                        </span>
                       </TableCaption>
                       <TableBody>
                         <TableRow>
@@ -778,7 +781,7 @@ export default function Home() {
                     missingArrowsDoc={missingArrowsDoc}
                   ></BirthNameChartInfo>
                   <DayNumberMeaning dayNumber={dayNumber}></DayNumberMeaning>
-                  <p className="text-left border p-2 rounded-sm bg-slate-100">
+                  <p className="text-left border-2 p-2 rounded-sm bg-background">
                     Hãy nhớ rằng, sức mạnh của Biểu đồ sinh ban đầu của bạn
                     không quan trọng bằng những gì bạn làm để lấp đầy khoảng
                     trống của nó. Một số người thành công nhất trong lịch sử đã
@@ -802,7 +805,7 @@ export default function Home() {
                           rulingNumber: rulingNumber,
                         },
                       }}
-                      className="bg-gradient-to-r from-fuchsia-200 to-amber-200 via-rose-200 py-2 px-4 rounded-md opacity-90 hover:opacity-100"
+                      className="bg-gradient-to-r from-fuchsia-200 to-amber-200 via-rose-200 py-2 px-4 rounded-md opacity-90 hover:opacity-100 text-black"
                     >
                       Xem định hướng năm {new Date().getFullYear()}
                     </Link>
