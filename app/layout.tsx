@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description:
       "Bên trong mỗi người là một ánh sáng tuyệt vời đang chờ đợi để tỏa sáng, một linh hồn hùng vĩ đang khao khát được thể hiện.",
     url: "https://thansohoconline.vercel.app",
-    siteName: "Thần số học - by Khai Fade",
+    siteName: "KhaiFade",
     images: [
       {
         url: "https://thansohoconline.vercel.app/og-alt.png",
