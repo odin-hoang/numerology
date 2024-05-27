@@ -1,7 +1,7 @@
 import { TPeak } from "@/components/cycle/peak";
 import { TPersonalYear } from "@/components/cycle/personal-year";
 import { Arrow } from "@/components/home/birth-name-chart-info";
-const baseURL = "https://numerology-qdl0.onrender.com/api";
+const baseURL = process.env.NEXT_PUBLIC_NODE_SERVER_URL;
 // const baseURL = "http://localhost:2024/api";
 export async function saveHistory(name: string, dob: string) {
   const res = await fetch(`${baseURL}/history`, {
