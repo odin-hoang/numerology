@@ -16,7 +16,7 @@ const Footer = () => {
         bottom: visible
           ? "0"
           : `${
-              ref?.current?.clientHeight && ref?.current?.offsetHeight * -1 + 20
+              ref?.current?.offsetHeight && ref?.current?.offsetHeight * -1 + 20
             }px` || "-100px",
       }}
       className={cn(
